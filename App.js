@@ -1,21 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {Provider} from "react-redux";
+import rootReducer from "./src/redux/rootReducer";
+import {compose, createStore} from "redux";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginContainer from "./src/components/Login/LoginContainer";
+import MyDescContainer from "./src/components/MyDesc/MyDescContainer";
+import Cards from './src/components/MyDesc/Cards/Cards';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const Stack = createStackNavigator();
+    const store = createStore(
+        rootReducer,
+        compose(window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()),
+    );
+function App() {
+    return (
+        <Provider store={store}>
+        <NavigationContainer>
+            <Stack.Navigator>
+                {JSON.parse(localStorage.getItem('author')) === null && <Stack.Screen name="Login" component={LoginContainer} />}
+                <Stack.Screen name="MyDesc" component={MyDescContainer} />
+                <Stack.Screen name="Cards" component={Cards} />
+            </Stack.Navigator>
+        </NavigationContainer>
+        </Provider>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
