@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import {Text, View} from "react-native-web";
+import {Text, TextInput, TouchableOpacity, View} from "react-native-web";
+import {addComment, addDescription} from "../../../../redux/actions";
 // import Comment from './Comment/Comment.jsx';
 // import Description from './Description/Description.jsx';
 // import CardHeader from './CardHeader/CardHeader.jsx';
@@ -8,11 +9,13 @@ import {Text, View} from "react-native-web";
 
 function CardDetailWindow(props) {
     const [comment, setComment] = useState('');
+    const [description, setDescription] = useState('');
 
     const { listTitle } = props.route.params;
     const { cardTitle } = props.route.params;
     const { cardDescription } = props.route.params;
     const { author } = props.route.params;
+    const { cardId } = props.route.params;
 
     const generateId = () => {
         let id = 0;
@@ -35,6 +38,20 @@ function CardDetailWindow(props) {
         return id;
     };
 
+    function addDescription() {
+        props.addDescription(description, cardId);
+        setDescription('');
+    }
+    function addComment() {
+        props.addComment({
+            id: generateId(),
+            authorId: 0,
+            cardId: props.cardId,
+            body: comment,
+         });
+        setDescription('');
+    }
+
     // const commentsList = props.thisCardComments.map(comments => (
     //     <Comment key={comments.id} id={comments.id} body={comments.body} author={props.author} />
     // ));
@@ -42,21 +59,14 @@ function CardDetailWindow(props) {
     return (
         <View>
 
-            {/*<CardHeader title={props.cardName} cardId={props.cardId} />*/}
             <View>
                 <Text>CardHeader: {cardTitle}</Text>
             </View>
 
-            {/*<div>*/}
-            {/*    <b>in list</b> {props.nameList}*/}
-            {/*</div>*/}
-
             <View>
                 <Text>in list: {listTitle}</Text>
             </View>
-            {/*<div>*/}
-            {/*    <b>Author</b> {props.author}*/}
-            {/*</div>*/}
+
             <View>
                 <Text>Author: {author}</Text>
             </View>
@@ -66,7 +76,13 @@ function CardDetailWindow(props) {
             </View>
             {/*<Description cardId={props.cardId} nameList={props.nameList} cardDescription={props.cardDescription} />*/}
 
-            <Text>Форма обновления описания</Text>
+            <TextInput
+                onChangeText={text => setDescription(text)}
+                value={description}
+            />
+            <TouchableOpacity onPress={addDescription}>
+                <Text>Save description</Text>
+            </TouchableOpacity>
 
             {/*<div>Activity</div>*/}
             {/*<InputGroup>*/}
@@ -93,6 +109,15 @@ function CardDetailWindow(props) {
             {/*    Save*/}
             {/*</Button>*/}
 
+            {/*<TextInput*/}
+            {/*    onChangeText={text => setComment(text)}*/}
+            {/*    value={comment}*/}
+            {/*/>*/}
+
+            {/*<TouchableOpacity onPress={addComment}>*/}
+            {/*    <Text>Save description</Text>*/}
+            {/*</TouchableOpacity>*/}
+
             <Text>Форма добавления комментариев</Text>
 
             {/*{commentsList}*/}
@@ -106,5 +131,5 @@ function CardDetailWindow(props) {
 const mapStateToProps = () => ({});
 
 export default connect(mapStateToProps, {
-    // handleAddComment
+    addDescription, addComment
 })(CardDetailWindow);

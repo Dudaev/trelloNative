@@ -1,5 +1,19 @@
 import {
-  SET_EMAIL, SET_NAME, SET_PASSWORD, SET_TOKEN, GET_COlUMNS, ADD_CARD, REMOVE_CARD, SHOW_CARD_DETAIL, UPDATE_CARD_TITLE, ADD_DESCRIPTION, ADD_LIST, REMOVE_LIST, UPDATE_LIST_TITLE, GET_CARDS,
+  SET_EMAIL,
+  SET_NAME,
+  SET_PASSWORD,
+  SET_TOKEN,
+  GET_COlUMNS,
+  ADD_CARD,
+  REMOVE_CARD,
+  SHOW_CARD_DETAIL,
+  UPDATE_CARD_TITLE,
+  ADD_DESCRIPTION,
+  ADD_LIST,
+  REMOVE_LIST,
+  UPDATE_LIST_TITLE,
+  GET_CARDS,
+  ADD_COMMENT, REMOVE_COMMENT, UPDATE_COMMENT, REMOVE_CARD_COMMENTS,
 } from './types';
 
 
@@ -46,7 +60,7 @@ export const UpdateCardTitle = (cardId, updatedTitle) => ({
   cardId,
   updatedTitle,
 });
-export const AddDescription = (addedDescription, cardId) => ({
+export const addDescription = (addedDescription, cardId) => ({
   type: ADD_DESCRIPTION,
   addedDescription,
   cardId,
@@ -63,5 +77,23 @@ export const updateLIstTitle = (listId, title) => ({
   type: UPDATE_LIST_TITLE,
   listId,
   title,
+});
+export const addComment = comment => ({
+  type: ADD_COMMENT,
+  comment,
+});
+export const removeComment = commentId => ({
+  type: REMOVE_COMMENT,
+  commentId,
+});
+export const updateComment = (commentId, updatedBody) => ({
+  type: UPDATE_COMMENT,
+  commentId,
+  updatedBody,
+});
+
+export const removeCardComments = cardId => ({
+  type: REMOVE_CARD_COMMENTS,
+  cardId,
 });
 

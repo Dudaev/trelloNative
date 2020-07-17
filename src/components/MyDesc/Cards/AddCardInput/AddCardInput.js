@@ -5,8 +5,8 @@ import { addCard, removeCard } from '../../../../redux/actions';
 
 const AddCardInput = props => {
   const [title, setTitle] = useState('');
-  const [visible, setVisible] = useState(false);
-  const dispatch = useDispatch();
+  // const [visible, setVisible] = useState(false);
+  // const dispatch = useDispatch();
   const author = props.state.authorReducer.name;
 
   const generateId = () => {
@@ -30,7 +30,7 @@ const AddCardInput = props => {
     return id;
   };
   function handleAddAndHide() {
-    setVisible(false);
+    // setVisible(false);
 
     props.addCard({
         id: generateId(),

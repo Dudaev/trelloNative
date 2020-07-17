@@ -26,6 +26,7 @@ const Cards = props => {
                     renderItem={({ item }) => (
                         <TouchableOpacity style={styles.card} onPress={()=>props.navigation.navigate('CardDetailWindow', {
                             listTitle,
+                            cardId:item.id,
                             cardTitle:item.title,
                             cardDescription:item.description,
                             author:item.authorName,
