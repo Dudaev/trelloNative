@@ -2,7 +2,7 @@ import React from 'react';
 import MyDesc from "./MyDesc";
 import axios from "axios";
 import {connect} from "react-redux";
-import {getColumns} from "../../redux/actions";
+import {getColumns, removeList} from "../../redux/actions";
 
 class MyDescContainer extends React.Component {
 
@@ -15,7 +15,7 @@ class MyDescContainer extends React.Component {
     }
     render() {
         return (
-            <MyDesc columns={this.props.state.columnsReducer} navigation={this.props.navigation} />
+            <MyDesc columns={this.props.state.columnsReducer} navigation={this.props.navigation} removeList={this.props.removeList}/>
         )
     }
 }
@@ -23,4 +23,4 @@ class MyDescContainer extends React.Component {
 const mapStateToProps = state => ({
     state,
 });
-export default connect(mapStateToProps, {getColumns})(MyDescContainer);
+export default connect(mapStateToProps, {getColumns, removeList})(MyDescContainer);

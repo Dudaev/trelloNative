@@ -7,18 +7,21 @@ import Cards from './Cards/Cards';
 export default function MyDesc(props) {
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.button} onPress={()=>props.navigation.navigate('Cards', item.id )}>
-            <Text>{item.title}</Text>
+        <TouchableOpacity style={styles.list} onPress={()=>props.navigation.navigate('Cards', item.id )}>
+            <Text style={styles.listTitle}>{item.title}</Text>
+            <TouchableOpacity style={styles.delete} onPress={()=> props.removeList(item.id)}>
+                <Text>Delete</Text>
+            </TouchableOpacity>
         </TouchableOpacity>
     );
 
     return (
         <View style={styles.container}>
-            <View style={styles.title}>
+            <View>
 
                 <AddListInput/>
             </View>
-            <View style={styles.body}>
+            <View>
                 <FlatList
                     data={props.columns}
                     renderItem={renderItem}
@@ -33,32 +36,27 @@ export default function MyDesc(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
+        textAlign: "center",
         paddingHorizontal: 10,
         backgroundColor: "#FFFFFF",
     },
-    title:{
+    list: {
         flex: 1,
-        borderBottomWidth: 1,
-        borderColor: "#E5E5E5",
+        flexDirection: 'row',
         justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
-    },
-    body:{
-        flex: 9,
-
-    },
-    button: {
-        alignItems: "center",
-        backgroundColor: "#FFFFFF",
-        padding: 10,
+        textAlign: "center",
         borderWidth: 1,
         borderColor: "#E5E5E5",
     },
-    text: {
-        flex: 1
+    listTitle: {
+        flex: 9,
     },
-    add: {
-    }
+    delete: {
+        flex: 1,
+        justifyContent: "center",
+        backgroundColor: "#AC5253",
+        height: 50,
+        borderWidth: 1,
+        borderColor: "#E5E5E5",
+    },
 });
