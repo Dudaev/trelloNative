@@ -17,19 +17,19 @@ import {
 } from './types';
 
 
-export const SetEmail = email => ({
+export const setEmail = email => ({
   type: SET_EMAIL,
   email,
 });
-export const SetPassword = password => ({
+export const setPassword = password => ({
   type: SET_PASSWORD,
     password,
 });
-export const SetToken = token => ({
+export const setToken = token => ({
   type: SET_TOKEN,
     token,
 });
-export const SetName = name => ({
+export const setName = name => ({
   type: SET_NAME,
   name,
 });

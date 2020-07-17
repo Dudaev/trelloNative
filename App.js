@@ -20,7 +20,9 @@ function App() {
         <Provider store={store}>
         <NavigationContainer>
             <Stack.Navigator>
-                {JSON.parse(localStorage.getItem('author')) === null && <Stack.Screen name="Login" component={LoginContainer} />}
+                {
+                    // JSON.parse(localStorage.getItem('author')) === null &&
+                    <Stack.Screen name="Login" component={LoginContainer} />}
                 <Stack.Screen name="MyDesc" component={MyDescContainer} />
                 <Stack.Screen name="Cards" component={Cards} />
                 <Stack.Screen name="CardDetailWindow" component={CardDetailWindow} />

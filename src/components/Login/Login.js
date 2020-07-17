@@ -7,17 +7,17 @@ const Login = (props) => {
         <View style={styles.container}>
             <TextInput
                 style={styles.input}
-                onChangeText={text => props.SetEmail(text)}
+                onChangeText={text => props.setEmail(text)}
                 value={props.authorReducer.email}
             />
             <TextInput
                 style={styles.input}
-                onChangeText={text => props.SetName(text)}
+                onChangeText={text => props.setName(text)}
                 value={props.authorReducer.name}
             />
             <TextInput
                 style={styles.input}
-                onChangeText={text => props.SetPassword(text)}
+                onChangeText={text => props.setPassword(text)}
                 value={props.authorReducer.password}
             />
             <TouchableOpacity onPress={()=>props.signIn()}>

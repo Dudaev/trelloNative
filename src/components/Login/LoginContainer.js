@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import axios from "axios";
-import {SetEmail, SetName, SetPassword, SetToken} from "../../redux/actions";
+import {setEmail, setName, setPassword, setToken} from "../../redux/actions";
 import { connect } from 'react-redux';
 import Login from "./Login";
 
 const LoginContainer = (props) => {
-    useEffect(() => {
-        localStorage.setItem('author', JSON.stringify(props.state.authorReducer));
-    }, [props.state.authorReducer]);
+    // useEffect(() => {
+    //     localStorage.setItem('author', JSON.stringify(props.state.authorReducer));
+    // }, [props.state.authorReducer]);
 
     const signIn = () => {
         axios.post(`http://trello-purrweb.herokuapp.com/auth/sign-up`,{
@@ -16,7 +16,7 @@ const LoginContainer = (props) => {
             "password": props.state.authorReducer.password,
         })
             .then(function (response) {
-                SetToken(response.data.token);
+                setToken(response.data.token);
             });
         props.navigation.navigate('MyDesc')
     }
@@ -24,9 +24,9 @@ const LoginContainer = (props) => {
     return (
         <Login signIn={signIn}
                authorReducer={props.state.authorReducer}
-               SetEmail={(email) => dispatch(SetEmail(email))}
-               SetPassword={(password) => dispatch(SetPassword(password))}
-               SetName={(name) => dispatch(SetName(name))}/>
+               setEmail={(email) => props.setEmail(email)}
+               setPassword={(password) => props.setPassword(password)}
+               setName={(name) => props.setName(name)}/>
     );
 };
 
@@ -34,4 +34,4 @@ const mapStateToProps = state => ({
     state,
 });
 
-export default connect(mapStateToProps, { SetEmail, SetPassword, SetToken, SetName })(LoginContainer);
+export default connect(mapStateToProps, { setEmail, setPassword, setToken, setName })(LoginContainer);

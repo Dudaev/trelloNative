@@ -1,6 +1,6 @@
 import {SET_EMAIL, SET_NAME, SET_PASSWORD, SET_TOKEN} from './types';
 
-const authorReducer = (state = JSON.parse(localStorage.getItem('author')) || { email:'', name: '', password:'', token: '' }, action) => {
+const authorReducer = (state = { email:'', name: '', password:'', token: '' }, action) => {
     switch (action.type) {
         case SET_EMAIL:
             return { ...state, email: action.email };
