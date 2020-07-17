@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginContainer from "./src/components/Login/LoginContainer";
 import MyDescContainer from "./src/components/MyDesc/MyDescContainer";
 import Cards from './src/components/MyDesc/Cards/Cards';
+import CardDetailWindow from "./src/components/MyDesc/Cards/CardDetailWindow/CardDetailWindow";
 
 const Stack = createStackNavigator();
     const store = createStore(
@@ -22,6 +23,7 @@ function App() {
                 {JSON.parse(localStorage.getItem('author')) === null && <Stack.Screen name="Login" component={LoginContainer} />}
                 <Stack.Screen name="MyDesc" component={MyDescContainer} />
                 <Stack.Screen name="Cards" component={Cards} />
+                <Stack.Screen name="CardDetailWindow" component={CardDetailWindow} />
             </Stack.Navigator>
         </NavigationContainer>
         </Provider>

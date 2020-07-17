@@ -36,7 +36,7 @@ const AddCardInput = props => {
         id: generateId(),
         title: title,
         authorName: author,
-        columnId: props.listTitle ,
+        columnId: props.listId ,
         description: '',
         checked: false,
       });

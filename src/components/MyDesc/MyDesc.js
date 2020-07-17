@@ -7,7 +7,10 @@ import Cards from './Cards/Cards';
 export default function MyDesc(props) {
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.list} onPress={()=>props.navigation.navigate('Cards', item.id )}>
+        <TouchableOpacity style={styles.list} onPress={()=>props.navigation.navigate('Cards', {
+           listId:item.id,
+            listTitle:item.title,
+        })}>
             <Text style={styles.listTitle}>{item.title}</Text>
             <TouchableOpacity style={styles.delete} onPress={()=> props.removeList(item.id)}>
                 <Text>Delete</Text>

@@ -15,16 +15,21 @@ const Cards = props => {
     //         this.props.getCards(response.data);
     //     });
     // }
-    const listTitle = props.route.params;
-    const cards = props.state.cardsReducer.filter(card => card.columnId === props.route.params);
-
+    const {listTitle} = props.route.params;
+    const {listId} = props.route.params;
+    const cards = props.state.cardsReducer.filter(card => card.columnId === listId);
         return (
           <View style={styles.container}>
-                <AddCardInput listTitle={listTitle}/>
+                <AddCardInput listId={listId}/>
                 <FlatList
                     data={cards}
                     renderItem={({ item }) => (
-                        <TouchableOpacity style={styles.card} onPress={()=>console.log('1')}>
+                        <TouchableOpacity style={styles.card} onPress={()=>props.navigation.navigate('CardDetailWindow', {
+                            listTitle,
+                            cardTitle:item.title,
+                            cardDescription:item.description,
+                            author:item.authorName,
+                        })}>
                             <Text style={styles.cardTitle}>{item.title}</Text>
                             <TouchableOpacity style={styles.delete} onPress={()=> props.removeCard(item.id)}>
                                 <Text>Delete</Text>
