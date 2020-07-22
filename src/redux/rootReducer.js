@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import authorReducer from "./authorReducer";
-import columnsReducer from "./columnsReducer";
-import cardsReducer from "./cardsReduser";
-import commentsReducer from "./commentsReduser";
+import authorReducer from './authorReducer';
+import columnsReducer from './columnsReducer';
+import cardsReducer from './cardsReducer';
+import commentsReducer from './commentsReducer';
 
 const rootReducer = combineReducers({
   authorReducer,

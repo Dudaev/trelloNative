@@ -18,14 +18,14 @@ const cardsReducer = (state = [], action) => {
     case UPDATE_CARD_TITLE:
       return state.map(card => {
         if (card.id === action.cardId) {
-          return { ...card, name: action.updatedTitle };
+          return { ...card, name: action.title };
         }
         return card;
       });
     case ADD_DESCRIPTION:
       return state.map(card => {
         if (card.id === action.cardId) {
-          return { ...card, description: action.addedDescription };
+          return { ...card, description: action.description };
         }
         return card;
       });
