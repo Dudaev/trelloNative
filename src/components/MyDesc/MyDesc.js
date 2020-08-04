@@ -7,7 +7,7 @@ import AddListInput from './AddListInput/AddListInput';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // textAlign: 'center',
+    textAlign: 'center',
     paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
   },
@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    // textAlign: 'center',
     borderWidth: 1,
     borderColor: '#E5E5E5',
   },

@@ -10,7 +10,7 @@ import AddCardInput from './AddCardInput/AddCardInput';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // textAlign: 'center',
+    textAlign: 'center',
     paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
   },
@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    // textAlign: 'center',
     borderWidth: 1,
     borderColor: '#E5E5E5',
   },
