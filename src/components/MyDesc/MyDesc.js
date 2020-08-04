@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList, TouchableOpacity } from 'react-native-web';
 import PropTypes from 'prop-types';
 import AddListInput from './AddListInput/AddListInput';
+import {connect} from "react-redux";
+import {removeList, setColumns, setColumnsThunk} from "../../redux/actions";
 // import Cards from './Cards/Cards';
 const styles = StyleSheet.create({
   container: {
@@ -31,7 +33,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function MyDesc(props) {
+const MyDesc = props => {
+  useEffect(() => {
+        props.setColumnsThunk(props.state.authorReducer.token);
+    }, []);
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.list}
@@ -55,15 +61,20 @@ export default function MyDesc(props) {
         <AddListInput />
       </View>
       <View>
-        <FlatList data={props.columns} renderItem={renderItem} keyExtractor={item => item.id} />
+        <FlatList data={props.state.columnsReducer} renderItem={renderItem} keyExtractor={item => item.id} />
       </View>
     </View>
   );
 }
 
 MyDesc.propTypes = {
+  state: PropTypes.object,
   navigation: PropTypes.object,
-  item: PropTypes.object,
+  getColumns: PropTypes.func,
   removeList: PropTypes.func,
-  columns: PropTypes.array,
 };
+
+const mapStateToProps = state => ({
+  state,
+});
+export default connect(mapStateToProps, { setColumns, removeList, setColumnsThunk })(MyDesc);

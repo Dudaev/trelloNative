@@ -3,7 +3,7 @@ import {
   SET_NAME,
   SET_PASSWORD,
   SET_TOKEN,
-  GET_COLUMNS,
+  SET_COLUMNS,
   ADD_CARD,
   REMOVE_CARD,
   SHOW_CARD_DETAIL,
@@ -18,6 +18,7 @@ import {
   UPDATE_COMMENT,
   REMOVE_CARD_COMMENTS,
 } from './types';
+import axios from "axios";
 
 export const setEmail = email => ({
   type: SET_EMAIL,
@@ -39,8 +40,8 @@ export const setName = name => ({
   name,
 });
 
-export const getColumns = columns => ({
-  type: GET_COLUMNS,
+export const setColumns = columns => ({
+  type: SET_COLUMNS,
   columns,
 });
 
@@ -112,3 +113,16 @@ export const removeCardComments = cardId => ({
   type: REMOVE_CARD_COMMENTS,
   cardId,
 });
+
+export const setColumnsThunk = (token) => {
+  console.log("ее" + token)
+  return (dispatch) => {
+      axios
+          .get(`http://trello-purrweb.herokuapp.com/columns`, {
+            headers: { Authorization: token },
+          })
+          .then(response => {
+            dispatch(setColumns(response.data));
+          });
+  }
+}

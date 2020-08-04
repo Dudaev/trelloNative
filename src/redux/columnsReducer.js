@@ -1,8 +1,8 @@
-import { GET_COLUMNS, ADD_LIST, REMOVE_LIST, UPDATE_LIST_TITLE } from './types';
+import { SET_COLUMNS, ADD_LIST, REMOVE_LIST, UPDATE_LIST_TITLE } from './types';
 
 const columnsReducer = (state = [], action) => {
   switch (action.type) {
-    case GET_COLUMNS:
+    case SET_COLUMNS:
       return action.columns;
     case ADD_LIST:
       return [...state, action.list];
