@@ -1,11 +1,11 @@
-import { ADD_CARD, ADD_DESCRIPTION, REMOVE_CARD, SHOW_CARD_DETAIL, UPDATE_CARD_TITLE, GET_CARDS } from './types';
+import { ADD_CARD, ADD_DESCRIPTION, REMOVE_CARD, SHOW_CARD_DETAIL, UPDATE_CARD_TITLE, SET_CARDS } from './types';
 
 const cardsReducer = (state = [], action) => {
   switch (action.type) {
-    case GET_CARDS:
+    case SET_CARDS:
       return action.cards;
-    case ADD_CARD:
-      return [...state, action.card];
+    // case ADD_CARD:
+    //   return [...state, action.card];
     case REMOVE_CARD:
       return state.filter(({ id }) => id !== action.cardId);
     case SHOW_CARD_DETAIL:

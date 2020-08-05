@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Text, TextInput, TouchableOpacity, View, FlatList } from 'react-native-web';
 import PropTypes from 'prop-types';
 import uid from 'uid';
-import { addComment, addDescription } from '../../../../redux/actions';
+import {addComment, addCommentThunk, addDescription, deleteCommentThunk} from '../../../../redux/actions';
 
 function CardDetailWindow(props) {
-  const [comment, setComment] = useState('');
+  const [commentBody, setComment] = useState('');
   const [description, setDescription] = useState('');
 
   const { listTitle } = props.route.params;
@@ -22,14 +22,13 @@ function CardDetailWindow(props) {
     setDescription('');
   }
   function handleAddComment() {
-    props.addComment({
-      id: uid(),
-      author,
-      cardId,
-      body: comment,
-    });
+      props.addCommentThunk(cardId, commentBody, props.state.authorReducer.token)
     setComment('');
   }
+    function handleDeleteComment(commentId) {
+      props.deleteCommentThunk(commentId, props.state.authorReducer.token)
+  }
+
 
   return (
     <View>
@@ -54,7 +53,7 @@ function CardDetailWindow(props) {
         <Text>Save description</Text>
       </TouchableOpacity>
 
-      <TextInput onChangeText={text => setComment(text)} value={comment} />
+      <TextInput onChangeText={text => setComment(text)} value={commentBody} />
       <TouchableOpacity onPress={handleAddComment}>
         <Text>Add comment</Text>
       </TouchableOpacity>
@@ -64,6 +63,9 @@ function CardDetailWindow(props) {
           <View>
             <Text>Comment: {item.body}</Text>
             <Text>Author: {item.author}</Text>
+              <TouchableOpacity onPress={() => handleDeleteComment(item.id)}>
+                  <Text>delete</Text>
+              </TouchableOpacity>
           </View>
         )}
         keyExtractor={item => item.id}
@@ -87,4 +89,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   addDescription,
   addComment,
+    addCommentThunk,
+    deleteCommentThunk,
 })(CardDetailWindow);

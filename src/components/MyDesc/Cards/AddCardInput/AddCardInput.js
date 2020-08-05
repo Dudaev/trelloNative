@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { View, TouchableOpacity, TextInput, Text, StyleSheet } from 'react-native-web';
 import PropTypes from 'prop-types';
 import uid from 'uid';
-import { addCard, removeCard } from '../../../../redux/actions';
+import {addCard, addCardThunk, removeCard} from '../../../../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,21 +40,10 @@ const styles = StyleSheet.create({
 
 const AddCardInput = props => {
   const [title, setTitle] = useState('');
-  // const [visible, setVisible] = useState(false);
-  // const dispatch = useDispatch();
   const author = props.state.authorReducer.name;
 
   function handleAddAndHide() {
-    // setVisible(false);
-
-    props.addCard({
-      id: uid(),
-      title,
-      authorName: author,
-      columnId: props.listId,
-      description: '',
-      checked: false,
-    });
+    props.addCardThunk( title, '', false, props.listId, props.state.authorReducer.token)
     setTitle('');
   }
   return (
@@ -77,4 +66,4 @@ AddCardInput.propTypes = {
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { addCard, removeCard })(AddCardInput);
+export default connect(mapStateToProps, { addCard, removeCard, addCardThunk })(AddCardInput);
