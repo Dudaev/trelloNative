@@ -115,7 +115,6 @@ export const removeCardComments = cardId => ({
 });
 
 export const setColumnsThunk = (token) => {
-  console.log("ее" + token)
   return (dispatch) => {
       axios
           .get(`http://trello-purrweb.herokuapp.com/columns`, {
@@ -126,3 +125,20 @@ export const setColumnsThunk = (token) => {
           });
   }
 }
+
+export const getAuthUserData = (email, name, password, navigationMyDesc ) => {
+  return (dispatch) => {
+    axios
+        .post(`http://trello-purrweb.herokuapp.com/auth/sign-up`, {
+          email,
+          name,
+          password,
+        })
+        .then(response => {
+          let token = `Bearer ${response.data.token}`
+          dispatch(setToken(token));
+          navigationMyDesc();
+        });
+  }
+}
+

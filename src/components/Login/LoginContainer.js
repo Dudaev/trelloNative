@@ -1,23 +1,15 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {setColumnsThunk, setEmail, setName, setPassword, setToken} from '../../redux/actions';
+import {getAuthUserData, setEmail, setName, setPassword, setToken} from '../../redux/actions';
 import Login from './Login';
 
 const LoginContainer = props => {
   const signIn = () => {
-    axios
-      .post(`http://trello-purrweb.herokuapp.com/auth/sign-up`, {
-        email: props.state.authorReducer.email,
-        name: props.state.authorReducer.name,
-        password: props.state.authorReducer.password,
-      })
-      .then(response => {
-        let token = `Bearer ${response.data.token}`
-        props.setToken(token);
-        props.navigation.navigate('MyDesc');
-      });
+    props.getAuthUserData(props.state.authorReducer.email,
+        props.state.authorReducer.name,
+        props.state.authorReducer.password,
+        () => props.navigation.navigate('MyDesc'))
   };
   return (
     <Login
@@ -43,4 +35,4 @@ const mapStateToProps = state => ({
   state,
 });
 
-export default connect(mapStateToProps, { setEmail, setPassword, setToken, setName, setColumnsThunk })(LoginContainer);
+export default connect(mapStateToProps, { setEmail, setPassword, setToken, setName, getAuthUserData })(LoginContainer);
