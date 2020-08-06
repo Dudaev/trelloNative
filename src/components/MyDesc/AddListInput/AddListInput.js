@@ -4,7 +4,7 @@ import { TouchableOpacity, TextInput, Text, StyleSheet } from 'react-native-web'
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import uid from 'uid';
-import {addList, addListThunk} from '../../../redux/actions';
+import { addList, addListThunk } from '../../../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,7 +43,7 @@ const AddListInput = props => {
   const [title, setTitle] = useState('');
 
   function handleAddAndHide() {
-    props.addListThunk(uid(), title, props.state.authorReducer.token)
+    props.addListThunk(uid(), title, props.state.authorReducer.token);
     setTitle('');
   }
 
@@ -62,6 +62,7 @@ const AddListInput = props => {
 AddListInput.propTypes = {
   state: PropTypes.object,
   addList: PropTypes.func,
+  addListThunk: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

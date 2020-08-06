@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList, TouchableOpacity } from 'react-native-web';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import AddListInput from './AddListInput/AddListInput';
-import {connect} from "react-redux";
-import {removeList, removeListThunk, setColumns, getListsThunk} from "../../redux/actions";
+import { removeListThunk, setColumns, getListsThunk } from '../../redux/actions';
 // import Cards from './Cards/Cards';
 const styles = StyleSheet.create({
   container: {
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
 
 const MyDesc = props => {
   useEffect(() => {
-        props.getListsThunk(props.state.authorReducer.token);
-    }, []);
+    props.getListsThunk(props.state.authorReducer.token);
+  }, []);
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -49,7 +49,10 @@ const MyDesc = props => {
       }
     >
       <Text style={styles.listTitle}>{item.title}</Text>
-      <TouchableOpacity style={styles.delete} onPress={() => props.removeListThunk(item.id, props.state.authorReducer.token)}>
+      <TouchableOpacity
+        style={styles.delete}
+        onPress={() => props.removeListThunk(item.id, props.state.authorReducer.token)}
+      >
         <Text>Delete</Text>
       </TouchableOpacity>
     </TouchableOpacity>
@@ -65,13 +68,15 @@ const MyDesc = props => {
       </View>
     </View>
   );
-}
+};
 
 MyDesc.propTypes = {
   state: PropTypes.object,
+  item: PropTypes.object,
   navigation: PropTypes.object,
   getColumns: PropTypes.func,
   removeListThunk: PropTypes.func,
+  getListsThunk: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

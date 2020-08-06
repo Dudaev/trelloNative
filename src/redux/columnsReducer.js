@@ -4,10 +4,10 @@ const columnsReducer = (state = [], action) => {
   switch (action.type) {
     case SET_COLUMNS:
       return action.columns;
-    // case ADD_LIST:
-    //   return [...state, action.list];
-    // case REMOVE_LIST:
-    //   return state.filter(({ id }) => id !== action.listId);
+    case ADD_LIST:
+      return [...state, action.list];
+    case REMOVE_LIST:
+      return state.filter(({ id }) => id !== action.listId);
     case UPDATE_LIST_TITLE:
       return state.map(list => {
         if (list.id === action.listId) {

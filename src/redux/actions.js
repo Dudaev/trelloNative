@@ -1,24 +1,25 @@
+import axios from 'axios';
 import {
-    SET_EMAIL,
-    SET_NAME,
-    SET_PASSWORD,
-    SET_TOKEN,
-    SET_COLUMNS,
-    ADD_CARD,
-    REMOVE_CARD,
-    SHOW_CARD_DETAIL,
-    UPDATE_CARD_TITLE,
-    ADD_DESCRIPTION,
-    ADD_LIST,
-    REMOVE_LIST,
-    UPDATE_LIST_TITLE,
-    SET_CARDS,
-    ADD_COMMENT,
-    REMOVE_COMMENT,
-    UPDATE_COMMENT,
-    REMOVE_CARD_COMMENTS, SET_COMMENTS,
+  SET_EMAIL,
+  SET_NAME,
+  SET_PASSWORD,
+  SET_TOKEN,
+  SET_COLUMNS,
+  ADD_CARD,
+  REMOVE_CARD,
+  SHOW_CARD_DETAIL,
+  UPDATE_CARD_TITLE,
+  ADD_DESCRIPTION,
+  ADD_LIST,
+  REMOVE_LIST,
+  UPDATE_LIST_TITLE,
+  SET_CARDS,
+  ADD_COMMENT,
+  REMOVE_COMMENT,
+  UPDATE_COMMENT,
+  REMOVE_CARD_COMMENTS,
+  SET_COMMENTS,
 } from './types';
-import axios from "axios";
 
 export const setEmail = email => ({
   type: SET_EMAIL,
@@ -55,15 +56,15 @@ export const setComments = comments => ({
   comments,
 });
 
-// export const addCard = card => ({
-//   type: ADD_CARD,
-//   card,
-// });
+export const addCard = card => ({
+  type: ADD_CARD,
+  card,
+});
 
-// export const removeCard = cardId => ({
-//   type: REMOVE_CARD,
-//   cardId,
-// });
+export const removeCard = cardId => ({
+  type: REMOVE_CARD,
+  cardId,
+});
 
 export const UpdateShowCardDetail = cardId => ({
   type: SHOW_CARD_DETAIL,
@@ -82,15 +83,15 @@ export const addDescription = (description, cardId) => ({
   cardId,
 });
 
-// export const addList = list => ({
-//   type: ADD_LIST,
-//   list,
-// });
+export const addList = list => ({
+  type: ADD_LIST,
+  list,
+});
 
-// export const removeList = listId => ({
-//   type: REMOVE_LIST,
-//   listId,
-// });
+export const removeList = listId => ({
+  type: REMOVE_LIST,
+  listId,
+});
 
 export const updateLIstTitle = (listId, title) => ({
   type: UPDATE_LIST_TITLE,
@@ -119,136 +120,129 @@ export const removeCardComments = cardId => ({
   cardId,
 });
 
-export const getAuthUserData = (email, name, password, navigationMyDesc ) => {
-    return (dispatch) => {
-        axios
-            .post(`http://trello-purrweb.herokuapp.com/auth/sign-up`, {
-                email,
-                name,
-                password,
-            })
-            .then(response => {
-                let token = `Bearer ${response.data.token}`
-                dispatch(setToken(token));
-                navigationMyDesc();
-            });
-    }
-}
+export const getAuthUserData = (email, name, password, navigationMyDesc) => dispatch => {
+  axios
+    .post(`http://trello-purrweb.herokuapp.com/auth/sign-up`, {
+      email,
+      name,
+      password,
+    })
+    .then(response => {
+      const token = `Bearer ${response.data.token}`;
+      dispatch(setToken(token));
+      navigationMyDesc();
+    });
+};
 
-export const getListsThunk = (token) => {
-  return (dispatch) => {
-      axios
-          .get(`http://trello-purrweb.herokuapp.com/columns`, {
-            headers: { Authorization: token },
-          })
-          .then(response => {
-            dispatch(setColumns(response.data));
-          });
-  }
-}
+export const getListsThunk = token => dispatch => {
+  axios
+    .get(`http://trello-purrweb.herokuapp.com/columns`, {
+      headers: { Authorization: token },
+    })
+    .then(response => {
+      dispatch(setColumns(response.data));
+    });
+};
 
-export const addListThunk = (id, title, token ) => {
-  return (dispatch) => {
-    axios
-        .post(`http://trello-purrweb.herokuapp.com/columns`, {
-          id,
-          title,
-        },{
-          headers: { Authorization: token },
-        })
-        .then(response => {
-            dispatch(getListsThunk(token));
-        });
-  }
-}
+export const addListThunk = (id, title, token) => dispatch => {
+  axios
+    .post(
+      `http://trello-purrweb.herokuapp.com/columns`,
+      {
+        id,
+        title,
+      },
+      {
+        headers: { Authorization: token },
+      },
+    )
+    .then(() => {
+      dispatch(getListsThunk(token));
+    });
+};
 
-export const removeListThunk = (id, token ) => {
-  return (dispatch) => {
-    axios
-        .delete(`http://trello-purrweb.herokuapp.com/columns/${id}`, {
-          headers: { Authorization: token },
-        })
-        .then(() => {
-            dispatch(getListsThunk(token));
-        });
-  }
-}
+export const removeListThunk = (id, token) => dispatch => {
+  axios
+    .delete(`http://trello-purrweb.herokuapp.com/columns/${id}`, {
+      headers: { Authorization: token },
+    })
+    .then(() => {
+      dispatch(getListsThunk(token));
+    });
+};
 
-export const getCardsThunk = (token) => {
-    return (dispatch) => {
-        axios
-            .get(`http://trello-purrweb.herokuapp.com/cards`, {
-                headers: { Authorization: token },
-            })
-            .then(response => {
-                dispatch(setCards(response.data));
-            });
-    }
-}
+export const getCardsThunk = token => dispatch => {
+  axios
+    .get(`http://trello-purrweb.herokuapp.com/cards`, {
+      headers: { Authorization: token },
+    })
+    .then(response => {
+      dispatch(setCards(response.data));
+    });
+};
 
-export const addCardThunk = (title, description, checked, column, token ) => {
-  return (dispatch) => {
-    axios
-        .post(`http://trello-purrweb.herokuapp.com/cards`, {
-            title,
-            description,
-            checked,
-            column
-        },{
-          headers: { Authorization: token },
-        })
-        .then(response => {
-          dispatch(getCardsThunk(token));
-        });
-  }
-}
+export const addCardThunk = (title, description, checked, column, token) => dispatch => {
+  axios
+    .post(
+      `http://trello-purrweb.herokuapp.com/cards`,
+      {
+        title,
+        description,
+        checked,
+        column,
+      },
+      {
+        headers: { Authorization: token },
+      },
+    )
+    .then(() => {
+      dispatch(getCardsThunk(token));
+    });
+};
 
-export const removeCardThunk = (id, token ) => {
-    return (dispatch) => {
-        axios
-            .delete(`http://trello-purrweb.herokuapp.com/cards/${id}`, {
-                headers: { Authorization: token },
-            })
-            .then(() => {
-                dispatch(getCardsThunk(token));
-            });
-    }
-}
+export const removeCardThunk = (id, token) => dispatch => {
+  axios
+    .delete(`http://trello-purrweb.herokuapp.com/cards/${id}`, {
+      headers: { Authorization: token },
+    })
+    .then(() => {
+      dispatch(removeCardComments(id));
+      dispatch(getCardsThunk(token));
+    });
+};
 
-export const getCommentsThunk = (token) => {
-    return (dispatch) => {
-        axios
-            .get(`http://trello-purrweb.herokuapp.com/comments`, {
-                headers: { Authorization: token },
-            })
-            .then(response => {
-                dispatch(setComments(response.data));
-            });
-    }
-}
+export const getCommentsThunk = token => dispatch => {
+  axios
+    .get(`http://trello-purrweb.herokuapp.com/comments`, {
+      headers: { Authorization: token },
+    })
+    .then(response => {
+      dispatch(setComments(response.data));
+    });
+};
 
-export const addCommentThunk = (cardId, body, token ) => {
-    return (dispatch) => {
-        axios
-            .post(`http://trello-purrweb.herokuapp.com/cards/${cardId}/comments`, {
-                body,
-            },{
-                headers: { Authorization: token },
-            })
-            .then(response => {
-                dispatch(getCommentsThunk(token));
-            });
-    }
-}
+export const addCommentThunk = (cardId, body, token) => dispatch => {
+  axios
+    .post(
+      `http://trello-purrweb.herokuapp.com/cards/${cardId}/comments`,
+      {
+        body,
+      },
+      {
+        headers: { Authorization: token },
+      },
+    )
+    .then(() => {
+      dispatch(getCommentsThunk(token));
+    });
+};
 
-export const deleteCommentThunk = (commentId, token ) => {
-    return (dispatch) => {
-        axios
-            .delete(`http://trello-purrweb.herokuapp.com/comments/${commentId}`, {
-                headers: { Authorization: token },
-            })
-            .then(() => {
-                dispatch(getCommentsThunk(token));
-            });
-    }
-}
+export const deleteCommentThunk = (commentId, token) => dispatch => {
+  axios
+    .delete(`http://trello-purrweb.herokuapp.com/comments/${commentId}`, {
+      headers: { Authorization: token },
+    })
+    .then(() => {
+      dispatch(getCommentsThunk(token));
+    });
+};

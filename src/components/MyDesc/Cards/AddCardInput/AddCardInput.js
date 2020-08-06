@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, TextInput, Text, StyleSheet } from 'react-native-web';
 import PropTypes from 'prop-types';
-import uid from 'uid';
-import {addCard, addCardThunk, removeCard} from '../../../../redux/actions';
+import { addCard, addCardThunk, removeCard } from '../../../../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,10 +39,9 @@ const styles = StyleSheet.create({
 
 const AddCardInput = props => {
   const [title, setTitle] = useState('');
-  const author = props.state.authorReducer.name;
 
   function handleAddAndHide() {
-    props.addCardThunk( title, '', false, props.listId, props.state.authorReducer.token)
+    props.addCardThunk(title, '', false, props.listId, props.state.authorReducer.token);
     setTitle('');
   }
   return (
@@ -61,6 +59,7 @@ AddCardInput.propTypes = {
   listId: PropTypes.number,
   addCard: PropTypes.func,
   removeCard: PropTypes.func,
+  addCardThunk: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

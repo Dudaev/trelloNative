@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { View, TouchableOpacity } from 'react-native-web';
 import { Text, FlatList, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import {getCards, removeCard, removeCardThunk} from '../../../redux/actions';
+import { removeCardThunk } from '../../../redux/actions';
 import AddCardInput from './AddCardInput/AddCardInput';
 
 const styles = StyleSheet.create({
@@ -74,7 +74,10 @@ const Cards = props => {
             }
           >
             <Text style={styles.cardTitle}>{item.title}</Text>
-            <TouchableOpacity style={styles.delete} onPress={() => props.removeCardThunk(item.id, props.state.authorReducer.token)}>
+            <TouchableOpacity
+              style={styles.delete}
+              onPress={() => props.removeCardThunk(item.id, props.state.authorReducer.token)}
+            >
               <Text>Delete</Text>
             </TouchableOpacity>
           </TouchableOpacity>
@@ -96,4 +99,4 @@ Cards.propTypes = {
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { getCards, removeCardThunk })(Cards);
+export default connect(mapStateToProps, { removeCardThunk })(Cards);

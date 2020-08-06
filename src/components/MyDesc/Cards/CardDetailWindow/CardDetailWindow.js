@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Text, TextInput, TouchableOpacity, View, FlatList } from 'react-native-web';
 import PropTypes from 'prop-types';
-import uid from 'uid';
-import {addComment, addCommentThunk, addDescription, deleteCommentThunk} from '../../../../redux/actions';
+import { addComment, addCommentThunk, addDescription, deleteCommentThunk } from '../../../../redux/actions';
 
 function CardDetailWindow(props) {
   const [commentBody, setComment] = useState('');
@@ -21,14 +20,15 @@ function CardDetailWindow(props) {
     props.addDescription(description, cardId);
     setDescription('');
   }
+
   function handleAddComment() {
-      props.addCommentThunk(cardId, commentBody, props.state.authorReducer.token)
+    props.addCommentThunk(cardId, commentBody, props.state.authorReducer.token);
     setComment('');
   }
-    function handleDeleteComment(commentId) {
-      props.deleteCommentThunk(commentId, props.state.authorReducer.token)
-  }
 
+  function handleDeleteComment(commentId) {
+    props.deleteCommentThunk(commentId, props.state.authorReducer.token);
+  }
 
   return (
     <View>
@@ -63,9 +63,9 @@ function CardDetailWindow(props) {
           <View>
             <Text>Comment: {item.body}</Text>
             <Text>Author: {item.author}</Text>
-              <TouchableOpacity onPress={() => handleDeleteComment(item.id)}>
-                  <Text>delete</Text>
-              </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleDeleteComment(item.id)}>
+              <Text>delete</Text>
+            </TouchableOpacity>
           </View>
         )}
         keyExtractor={item => item.id}
@@ -80,6 +80,8 @@ CardDetailWindow.propTypes = {
   addDescription: PropTypes.func,
   addComment: PropTypes.func,
   cardId: PropTypes.string,
+  addCommentThunk: PropTypes.string,
+  deleteCommentThunk: PropTypes.string,
 };
 
 const mapStateToProps = state => ({
@@ -89,6 +91,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   addDescription,
   addComment,
-    addCommentThunk,
-    deleteCommentThunk,
+  addCommentThunk,
+  deleteCommentThunk,
 })(CardDetailWindow);

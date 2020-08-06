@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {getAuthUserData, setEmail, setName, setPassword, setToken} from '../../redux/actions';
+import { getAuthUserData, setEmail, setName, setPassword, setToken } from '../../redux/actions';
 import Login from './Login';
 
 const LoginContainer = props => {
   const signIn = () => {
-    props.getAuthUserData(props.state.authorReducer.email,
-        props.state.authorReducer.name,
-        props.state.authorReducer.password,
-        () => props.navigation.navigate('MyDesc'))
+    props.getAuthUserData(
+      props.state.authorReducer.email,
+      props.state.authorReducer.name,
+      props.state.authorReducer.password,
+      () => props.navigation.navigate('MyDesc'),
+    );
   };
   return (
     <Login
@@ -29,6 +31,7 @@ LoginContainer.propTypes = {
   setPassword: PropTypes.func,
   setToken: PropTypes.func,
   setName: PropTypes.func,
+  getAuthUserData: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

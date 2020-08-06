@@ -4,8 +4,8 @@ const cardsReducer = (state = [], action) => {
   switch (action.type) {
     case SET_CARDS:
       return action.cards;
-    // case ADD_CARD:
-    //   return [...state, action.card];
+    case ADD_CARD:
+      return [...state, action.card];
     case REMOVE_CARD:
       return state.filter(({ id }) => id !== action.cardId);
     case SHOW_CARD_DETAIL:
