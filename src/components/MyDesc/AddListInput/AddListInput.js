@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { TouchableOpacity, TextInput, Text, StyleSheet } from 'react-native-web';
-import { View } from 'react-native';
+import { TouchableOpacity, TextInput, Text, StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import uid from 'uid';
 import { addList, addListThunk } from '../../../redux/actions';

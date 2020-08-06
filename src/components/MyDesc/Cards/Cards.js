@@ -1,8 +1,7 @@
 import React from 'react';
 // import axios from 'axios';
 import { connect } from 'react-redux';
-import { View, TouchableOpacity } from 'react-native-web';
-import { Text, FlatList, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, FlatList, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { removeCardThunk } from '../../../redux/actions';
 import AddCardInput from './AddCardInput/AddCardInput';

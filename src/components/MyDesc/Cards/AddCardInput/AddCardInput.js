@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { View, TouchableOpacity, TextInput, Text, StyleSheet } from 'react-native-web';
+import { View, TouchableOpacity, TextInput, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { addCard, addCardThunk, removeCard } from '../../../../redux/actions';
 

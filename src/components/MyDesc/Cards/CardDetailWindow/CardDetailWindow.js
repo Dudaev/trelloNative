@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Text, TextInput, TouchableOpacity, View, FlatList } from 'react-native-web';
+import { Text, TextInput, TouchableOpacity, View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { addComment, addCommentThunk, addDescription, deleteCommentThunk } from '../../../../redux/actions';
 

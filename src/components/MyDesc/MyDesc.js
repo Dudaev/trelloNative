@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { FlatList, TouchableOpacity } from 'react-native-web';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AddListInput from './AddListInput/AddListInput';
 import { removeListThunk, setColumns, getListsThunk } from '../../redux/actions';
-// import Cards from './Cards/Cards';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
