@@ -9,12 +9,11 @@ function CardDetailWindow(props) {
   const [description, setDescription] = useState('');
 
   const { listTitle } = props.route.params;
-  const { cardTitle } = props.route.params;
-  const { cardDescription } = props.route.params;
   const { author } = props.route.params;
   const { cardId } = props.route.params;
 
   const comments = props.state.commentsReducer.filter(commentary => commentary.cardId === cardId);
+  const card = props.state.cardsReducer.filter(card => card.id === cardId);
 
   function handleAddDescription() {
     props.addDescription(description, cardId);
@@ -33,7 +32,7 @@ function CardDetailWindow(props) {
   return (
     <View>
       <View>
-        <Text>CardHeader: {cardTitle}</Text>
+        <Text>CardHeader: {card[0].title}</Text>
       </View>
 
       <View>
@@ -45,7 +44,7 @@ function CardDetailWindow(props) {
       </View>
 
       <View>
-        <Text>Description: {cardDescription}</Text>
+        <Text>Description: {card[0].description}</Text>
       </View>
 
       <TextInput onChangeText={text => setDescription(text)} value={description} />
@@ -62,7 +61,7 @@ function CardDetailWindow(props) {
         renderItem={({ item }) => (
           <View>
             <Text>Comment: {item.body}</Text>
-            <Text>Author: {item.author}</Text>
+            <Text>Author: {author}</Text>
             <TouchableOpacity onPress={() => handleDeleteComment(item.id)}>
               <Text>delete</Text>
             </TouchableOpacity>

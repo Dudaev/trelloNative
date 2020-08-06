@@ -15,20 +15,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const Login = props => (
-  <View style={styles.container}>
-    <TextInput style={styles.input} onChangeText={text => props.setEmail(text)} value={props.authorReducer.email} />
-    <TextInput style={styles.input} onChangeText={text => props.setName(text)} value={props.authorReducer.name} />
-    <TextInput
-      style={styles.input}
-      onChangeText={text => props.setPassword(text)}
-      value={props.authorReducer.password}
-    />
-    <TouchableOpacity onPress={() => props.signIn()}>
-      <Text style={styles.text}>signIn</Text>
-    </TouchableOpacity>
-  </View>
-);
+const Login = props => {
+    return  (
+        <View style={styles.container}>
+            <TextInput style={styles.input} onChangeText={text => props.setEmail(text)} value={props.authorReducer.email} />
+            <TextInput style={styles.input} onChangeText={text => props.setName(text)} value={props.authorReducer.name} />
+            <TextInput
+                style={styles.input}
+                onChangeText={text => props.setPassword(text)}
+                value={props.authorReducer.password}
+            />
+            <TouchableOpacity onPress={() => props.signIn()}>
+                <Text style={styles.text}>signIn</Text>
+            </TouchableOpacity>
+        </View>
+    );
+}
+
+
 
 Login.propTypes = {
   setEmail: PropTypes.func,
