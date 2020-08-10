@@ -171,6 +171,22 @@ export const removeListThunk = (id, token) => dispatch => {
     });
 };
 
+export const PutListThunk = (id, title, token) => dispatch => {
+  axios
+    .put(
+      `http://trello-purrweb.herokuapp.com/columns/${id}`,
+      {
+        title,
+      },
+      {
+        headers: { Authorization: token },
+      },
+    )
+    .then(() => {
+      dispatch(getListsThunk(token));
+    });
+};
+
 export const getCardsThunk = token => dispatch => {
   axios
     .get(`http://trello-purrweb.herokuapp.com/cards`, {
@@ -207,6 +223,22 @@ export const removeCardThunk = (id, token) => dispatch => {
     })
     .then(() => {
       dispatch(removeCardComments(id));
+      dispatch(getCardsThunk(token));
+    });
+};
+
+export const PutCardThunk = (id, title, token) => dispatch => {
+  axios
+    .put(
+      `http://trello-purrweb.herokuapp.com/cards/${id}`,
+      {
+        title,
+      },
+      {
+        headers: { Authorization: token },
+      },
+    )
+    .then(() => {
       dispatch(getCardsThunk(token));
     });
 };

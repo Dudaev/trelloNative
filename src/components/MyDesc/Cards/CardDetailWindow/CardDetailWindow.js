@@ -131,17 +131,7 @@ function CardDetailWindow(props) {
                     onChangeText={text => setComment(text)}
                     value={commentBody}
                   />
-                  <Button title="Ok" onPress={() => handlePutComment(item.id, )} />
-                  {/* <Text style={styles.modalText}>Hello World!</Text>
-
-                  <TouchableHighlight
-                    style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
-                    onPress={() => {
-                      setModalVisible(!modalVisible);
-                    }}
-                  >
-                    <Text style={styles.textStyle}>Hide Modal</Text>
-                  </TouchableHighlight> */}
+                  <Button title="Ok" onPress={() => handlePutComment(item.id)} />
                 </View>
               </View>
             </Modal>

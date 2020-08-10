@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import axios from 'axios';
 import { connect } from 'react-redux';
-import { View, TouchableOpacity, Text, FlatList, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, FlatList, StyleSheet, Modal, Button, Alert, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
-import { removeCardThunk } from '../../../redux/actions';
+import { removeCardThunk, PutCardThunk } from '../../../redux/actions';
 import AddCardInput from './AddCardInput/AddCardInput';
 
 const styles = StyleSheet.create({
@@ -40,19 +40,50 @@ const styles = StyleSheet.create({
   cardTitle: {
     flex: 9,
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
 });
 
 const Cards = props => {
-  // componentDidMount() {
-  //     axios.get(`http://trello-purrweb.herokuapp.com/cards`,
-  //     { headers: {"Authorization" : 'Bearer bdaa158a4b624d0bca108a027905a7c0d2f5bd6074806ec0bf5cb76ea4f2b7fd'} })
-  //     .then(response => {
-  //         this.props.getCards(response.data);
-  //     });
-  // }
+  const [title, setTitle] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
   const { listTitle } = props.route.params;
   const { listId } = props.route.params;
   const cards = props.state.cardsReducer.filter(card => card.columnId === listId);
+
+  function handlePutList(ListId) {
+    props.PutCardThunk(ListId, title, props.state.authorReducer.token);
+    setTitle('');
+    setModalVisible(!modalVisible);
+  }
 
   return (
     <View style={styles.container}>
@@ -60,26 +91,50 @@ const Cards = props => {
       <FlatList
         data={cards}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() =>
-              props.navigation.navigate('CardDetailWindow', {
-                listTitle,
-                cardId: item.id,
-                cardTitle: item.title,
-                cardDescription: item.description,
-                author: props.state.authorReducer.name,
-              })
-            }
-          >
-            <Text style={styles.cardTitle}>{item.title}</Text>
-            <TouchableOpacity
-              style={styles.delete}
-              onPress={() => props.removeCardThunk(item.id, props.state.authorReducer.token)}
+          <View>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                Alert.alert('Modal has been closed.');
+              }}
             >
-              <Text>Delete</Text>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <TextInput
+                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    onChangeText={text => setTitle(text)}
+                    value={title}
+                  />
+                  <Button title="Ok" onPress={() => handlePutList(item.id)} />
+                </View>
+              </View>
+            </Modal>
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() =>
+                props.navigation.navigate('CardDetailWindow', {
+                  listTitle,
+                  cardId: item.id,
+                  cardTitle: item.title,
+                  cardDescription: item.description,
+                  author: props.state.authorReducer.name,
+                })
+              }
+            >
+              <Text style={styles.cardTitle}>{item.title}</Text>
+              <TouchableOpacity
+                style={styles.delete}
+                onPress={() => props.removeCardThunk(item.id, props.state.authorReducer.token)}
+              >
+                <Text>Delete</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.delete} onPress={() => setModalVisible(true)}>
+                <Text>Put</Text>
+              </TouchableOpacity>
             </TouchableOpacity>
-          </TouchableOpacity>
+          </View>
         )}
         keyExtractor={item => item.id}
       />
@@ -93,9 +148,10 @@ Cards.propTypes = {
   route: PropTypes.object,
   getCards: PropTypes.func,
   removeCardThunk: PropTypes.func,
+  PutCardThunk: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { removeCardThunk })(Cards);
+export default connect(mapStateToProps, { removeCardThunk, PutCardThunk })(Cards);
