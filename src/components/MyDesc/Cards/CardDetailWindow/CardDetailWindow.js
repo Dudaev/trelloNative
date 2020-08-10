@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  FlatList,
-  Modal,
-  TouchableHighlight,
-  Alert,
-  StyleSheet,
-  Button,
-} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, FlatList, Modal, Alert, StyleSheet, Button } from 'react-native';
 import PropTypes from 'prop-types';
 import {
   addComment,
@@ -63,7 +52,7 @@ function CardDetailWindow(props) {
   const { cardId } = props.route.params;
 
   const comments = props.state.commentsReducer.filter(commentary => commentary.cardId === cardId);
-  const card = props.state.cardsReducer.filter(card => card.id === cardId);
+  const card = props.state.cardsReducer.filter(postcard => postcard.id === cardId);
 
   function handleAddDescription() {
     props.addDescription(description, cardId);
