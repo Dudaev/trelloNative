@@ -246,3 +246,19 @@ export const deleteCommentThunk = (commentId, token) => dispatch => {
       dispatch(getCommentsThunk(token));
     });
 };
+
+export const PutCommentThunk = (CommentId, body, token) => dispatch => {
+  axios
+    .put(
+      `http://trello-purrweb.herokuapp.com/comments/${CommentId}`,
+      {
+        body,
+      },
+      {
+        headers: { Authorization: token },
+      },
+    )
+    .then(() => {
+      dispatch(getCommentsThunk(token));
+    });
+};
