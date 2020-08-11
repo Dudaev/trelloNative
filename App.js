@@ -10,6 +10,7 @@ import LoginContainer from './src/components/Login/LoginContainer';
 import Cards from './src/components/MyDesc/Cards/Cards';
 import CardDetailWindow from './src/components/MyDesc/Cards/CardDetailWindow/CardDetailWindow';
 import MyDesc from './src/components/MyDesc/MyDesc';
+import SignIn from "./src/components/Login/SignIn";
 
 const Stack = createStackNavigator();
 // eslint-disable-next-line no-underscore-dangle
@@ -21,6 +22,7 @@ function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen name="SignIn" component={SignIn} />
           <Stack.Screen name="Login" component={LoginContainer} />
           <Stack.Screen name="MyDesc" component={MyDesc} />
           <Stack.Screen name="Cards" component={Cards} />

@@ -5,6 +5,7 @@ export const SET_NAME = 'SET_NAME';
 export const SET_COLUMNS = 'SET_COLUMNS';
 export const SET_CARDS = 'SET_CARDS';
 export const SET_COMMENTS = 'SET_COMMENTS';
+export const SET_AUTHOR = 'SET_AUTHOR';
 export const ADD_CARD = 'ADD_CARD';
 export const REMOVE_CARD = 'REMOVE_CARD';
 export const SHOW_CARD_DETAIL = 'SHOW_CARD_DETAIL';

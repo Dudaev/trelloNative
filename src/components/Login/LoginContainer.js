@@ -20,6 +20,7 @@ const LoginContainer = props => {
       setEmail={email => props.setEmail(email)}
       setPassword={password => props.setPassword(password)}
       setName={name => props.setName(name)}
+      navigation={props.navigation}
     />
   );
 };

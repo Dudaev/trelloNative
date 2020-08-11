@@ -19,6 +19,7 @@ import {
   UPDATE_COMMENT,
   REMOVE_CARD_COMMENTS,
   SET_COMMENTS,
+  SET_AUTHOR,
 } from './types';
 
 export const setEmail = email => ({
@@ -54,6 +55,11 @@ export const setCards = cards => ({
 export const setComments = comments => ({
   type: SET_COMMENTS,
   comments,
+});
+
+export const setAuthor = author => ({
+  type: SET_AUTHOR,
+  author,
 });
 
 export const addCard = card => ({
@@ -128,6 +134,20 @@ export const getAuthUserData = (email, name, password, navigationMyDesc) => disp
       password,
     })
     .then(response => {
+      const token = `Bearer ${response.data.token}`;
+      dispatch(setToken(token));
+      navigationMyDesc();
+    });
+};
+
+export const signInThunk = (email, password, navigationMyDesc) => dispatch => {
+  axios
+    .post(`http://trello-purrweb.herokuapp.com/auth/sign-in`, {
+      email,
+      password,
+    })
+    .then(response => {
+      dispatch(setAuthor(response.data));
       const token = `Bearer ${response.data.token}`;
       dispatch(setToken(token));
       navigationMyDesc();

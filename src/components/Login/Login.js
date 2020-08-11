@@ -24,7 +24,10 @@ const Login = props => (
       value={props.authorReducer.password}
     />
     <TouchableOpacity onPress={() => props.signIn()}>
-      <Text style={styles.text}>signIn</Text>
+      <Text style={styles.text}>ОК</Text>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => props.navigation.navigate('SignIn')}>
+      <Text style={styles.text}>Войти</Text>
     </TouchableOpacity>
   </View>
 );
@@ -35,6 +38,7 @@ Login.propTypes = {
   setName: PropTypes.func,
   setPassword: PropTypes.func,
   signIn: PropTypes.func,
+  navigation: PropTypes.func,
 };
 
 export default Login;

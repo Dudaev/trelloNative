@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Button, Alert } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Button } from 'react-native';
 import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
@@ -33,6 +33,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
   },
+  delete: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#AC5253',
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+  },
 });
 
 const ModalWindow = props => {
@@ -47,14 +55,7 @@ const ModalWindow = props => {
 
   return (
     <View style={styles.container}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-        }}
-      >
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <TextInput

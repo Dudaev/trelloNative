@@ -90,7 +90,7 @@ const MyDesc = props => {
         >
           <Text>Delete</Text>
         </TouchableOpacity>
-        <ModalWindow handlePut={handlePutList} item={item} />
+        <ModalWindow style={styles.delete} handlePut={handlePutList} item={item} />
       </TouchableOpacity>
     </View>
   );
