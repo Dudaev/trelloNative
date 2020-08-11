@@ -134,6 +134,7 @@ export const getAuthUserData = (email, name, password, navigationMyDesc) => disp
       password,
     })
     .then(response => {
+      dispatch(setAuthor(response.data));
       const token = `Bearer ${response.data.token}`;
       dispatch(setToken(token));
       navigationMyDesc();
