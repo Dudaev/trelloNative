@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, Text, FlatList, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import { removeCardThunk, PutCardThunk } from '../../../redux/actions';
+import {removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk} from '../../../redux/actions';
 import AddCardInput from './AddCardInput/AddCardInput';
 import ModalWindow from '../ModalWindow';
 
@@ -73,6 +73,10 @@ const styles = StyleSheet.create({
 });
 
 const Cards = props => {
+  useEffect(() => {
+    props.getCardsThunk(props.state.authorReducer.token);
+    props.getCommentsThunk(props.state.authorReducer.token);
+  }, []);
   const { listTitle } = props.route.params;
   const { listId } = props.route.params;
   const cards = props.state.cardsReducer.filter(card => card.columnId === listId);
@@ -123,9 +127,11 @@ Cards.propTypes = {
   getCards: PropTypes.func,
   removeCardThunk: PropTypes.func,
   PutCardThunk: PropTypes.func,
+  getCommentsThunk: PropTypes.func,
+  getCardsThunk: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { removeCardThunk, PutCardThunk })(Cards);
+export default connect(mapStateToProps, { removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk })(Cards);

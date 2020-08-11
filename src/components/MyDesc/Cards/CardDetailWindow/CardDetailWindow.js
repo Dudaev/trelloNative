@@ -14,7 +14,6 @@ import ModalWindow from '../../ModalWindow';
 function CardDetailWindow(props) {
   const [commentBody, setComment] = useState('');
   const [description, setDescription] = useState('');
-  // const [modalVisible, setModalVisible] = useState(false);
 
   const { listTitle } = props.route.params;
   const { author } = props.route.params;
@@ -72,33 +71,11 @@ function CardDetailWindow(props) {
         data={comments}
         renderItem={({ item }) => (
           <View>
-            {/* <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-              }}
-            >
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={text => setComment(text)}
-                    value={commentBody}
-                  />
-                  <Button title="Ok" onPress={() => handlePutComment(item.id)} />
-                </View>
-              </View>
-            </Modal> */}
             <Text>Comment: {item.body}</Text>
             <Text>Author: {author}</Text>
             <TouchableOpacity onPress={() => handleDeleteComment(item.id)}>
               <Text>delete</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <Text>Put</Text>
-            </TouchableOpacity> */}
             <ModalWindow handlePut={handlePutComment} item={item} />
           </View>
         )}
