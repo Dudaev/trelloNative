@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Text, TextInput, TouchableOpacity, View, FlatList, Modal, Alert, StyleSheet, Button } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import {
   addComment,
@@ -9,43 +9,12 @@ import {
   deleteCommentThunk,
   PutCommentThunk,
 } from '../../../../redux/actions';
+import ModalWindow from '../../ModalWindow';
 
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-});
 function CardDetailWindow(props) {
   const [commentBody, setComment] = useState('');
   const [description, setDescription] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  // const [modalVisible, setModalVisible] = useState(false);
 
   const { listTitle } = props.route.params;
   const { author } = props.route.params;
@@ -64,10 +33,8 @@ function CardDetailWindow(props) {
     setComment('');
   }
 
-  function handlePutComment(CommentId) {
-    props.PutCommentThunk(CommentId, commentBody, props.state.authorReducer.token);
-    setComment('');
-    setModalVisible(!modalVisible);
+  function handlePutComment(CommentId, title) {
+    props.PutCommentThunk(CommentId, title, props.state.authorReducer.token);
   }
 
   function handleDeleteComment(commentId) {
@@ -105,7 +72,7 @@ function CardDetailWindow(props) {
         data={comments}
         renderItem={({ item }) => (
           <View>
-            <Modal
+            {/* <Modal
               animationType="slide"
               transparent={true}
               visible={modalVisible}
@@ -123,15 +90,16 @@ function CardDetailWindow(props) {
                   <Button title="Ok" onPress={() => handlePutComment(item.id)} />
                 </View>
               </View>
-            </Modal>
+            </Modal> */}
             <Text>Comment: {item.body}</Text>
             <Text>Author: {author}</Text>
             <TouchableOpacity onPress={() => handleDeleteComment(item.id)}>
               <Text>delete</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
+            {/* <TouchableOpacity onPress={() => setModalVisible(true)}>
               <Text>Put</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <ModalWindow handlePut={handlePutComment} item={item} />
           </View>
         )}
         keyExtractor={item => item.id}

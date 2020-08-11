@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Modal, Alert, TextInput, Button } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AddListInput from './AddListInput/AddListInput';
 import { removeListThunk, setColumns, getListsThunk, PutListThunk } from '../../redux/actions';
+import ModalWindow from './ModalWindow';
 
 const styles = StyleSheet.create({
   container: {
@@ -66,36 +67,13 @@ const MyDesc = props => {
   useEffect(() => {
     props.getListsThunk(props.state.authorReducer.token);
   }, []);
-  const [title, setTitle] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
 
-  function handlePutList(ListId) {
-    props.PutListThunk(ListId, title, props.state.authorReducer.token);
-    setTitle('');
-    setModalVisible(!modalVisible);
+  function handlePutList(listId, title) {
+    props.PutListThunk(listId, title, props.state.authorReducer.token);
   }
 
   const renderItem = ({ item }) => (
     <View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-              onChangeText={text => setTitle(text)}
-              value={title}
-            />
-            <Button title="Ok" onPress={() => handlePutList(item.id)} />
-          </View>
-        </View>
-      </Modal>
       <TouchableOpacity
         style={styles.list}
         onPress={() =>
@@ -112,9 +90,7 @@ const MyDesc = props => {
         >
           <Text>Delete</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.delete} onPress={() => setModalVisible(true)}>
-          <Text>Put</Text>
-        </TouchableOpacity>
+        <ModalWindow handlePut={handlePutList} item={item} />
       </TouchableOpacity>
     </View>
   );

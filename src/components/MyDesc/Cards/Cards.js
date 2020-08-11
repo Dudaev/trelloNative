@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-// import axios from 'axios';
+import React from 'react';
 import { connect } from 'react-redux';
-import { View, TouchableOpacity, Text, FlatList, StyleSheet, Modal, Button, Alert, TextInput } from 'react-native';
+import { View, TouchableOpacity, Text, FlatList, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { removeCardThunk, PutCardThunk } from '../../../redux/actions';
 import AddCardInput from './AddCardInput/AddCardInput';
+import ModalWindow from '../ModalWindow';
 
 const styles = StyleSheet.create({
   container: {
@@ -73,16 +73,12 @@ const styles = StyleSheet.create({
 });
 
 const Cards = props => {
-  const [title, setTitle] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
   const { listTitle } = props.route.params;
   const { listId } = props.route.params;
   const cards = props.state.cardsReducer.filter(card => card.columnId === listId);
 
-  function handlePutList(ListId) {
-    props.PutCardThunk(ListId, title, props.state.authorReducer.token);
-    setTitle('');
-    setModalVisible(!modalVisible);
+  function handlePutCard(cardId, title) {
+    props.PutCardThunk(cardId, title, props.state.authorReducer.token);
   }
 
   return (
@@ -92,25 +88,6 @@ const Cards = props => {
         data={cards}
         renderItem={({ item }) => (
           <View>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-              }}
-            >
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={text => setTitle(text)}
-                    value={title}
-                  />
-                  <Button title="Ok" onPress={() => handlePutList(item.id)} />
-                </View>
-              </View>
-            </Modal>
             <TouchableOpacity
               style={styles.card}
               onPress={() =>
@@ -130,9 +107,7 @@ const Cards = props => {
               >
                 <Text>Delete</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.delete} onPress={() => setModalVisible(true)}>
-                <Text>Put</Text>
-              </TouchableOpacity>
+              <ModalWindow handlePut={handlePutCard} item={item} />
             </TouchableOpacity>
           </View>
         )}
