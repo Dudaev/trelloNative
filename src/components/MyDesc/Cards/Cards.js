@@ -76,11 +76,9 @@ const Cards = props => {
   const { listTitle } = props.route.params;
   const { listId } = props.route.params;
   const cards = props.state.cardsReducer.filter(card => card.columnId === listId);
-
   function handlePutCard(cardId, title) {
     props.PutCardThunk(cardId, title, props.state.authorReducer.token);
   }
-
   return (
     <View style={styles.container}>
       <AddCardInput listId={listId} />
@@ -101,6 +99,7 @@ const Cards = props => {
               }
             >
               <Text style={styles.cardTitle}>{item.title}</Text>
+              <Text>COM {props.state.commentsReducer.filter(comment => comment.cardId === item.id).length} </Text>
               <TouchableOpacity
                 style={styles.delete}
                 onPress={() => props.removeCardThunk(item.id, props.state.authorReducer.token)}
