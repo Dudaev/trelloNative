@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { TouchableOpacity, TextInput, Text, StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import uid from 'uid';
-import { addList, addListThunk } from '../../../redux/actions';
+import { addListThunk } from '../../../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -60,7 +60,6 @@ const AddListInput = props => {
 
 AddListInput.propTypes = {
   state: PropTypes.object,
-  addList: PropTypes.func,
   addListThunk: PropTypes.func,
 };
 
@@ -68,4 +67,4 @@ const mapStateToProps = state => ({
   state,
 });
 
-export default connect(mapStateToProps, { addList, addListThunk })(AddListInput);
+export default connect(mapStateToProps, { addListThunk })(AddListInput);

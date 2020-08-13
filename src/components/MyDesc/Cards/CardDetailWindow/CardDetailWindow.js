@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { Text, TextInput, TouchableOpacity, View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import {
-  addComment,
   addCommentThunk,
-  addDescription,
   deleteCommentThunk,
+  PutCardDescriptionThunk,
   PutCommentThunk,
 } from '../../../../redux/actions';
 import ModalWindow from '../../ModalWindow';
@@ -23,7 +22,7 @@ function CardDetailWindow(props) {
   const card = props.state.cardsReducer.filter(postcard => postcard.id === cardId);
 
   function handleAddDescription() {
-    props.addDescription(description, cardId);
+    props.PutCardDescriptionThunk(cardId, description, props.state.authorReducer.token);
     setDescription('');
   }
 
@@ -88,12 +87,11 @@ function CardDetailWindow(props) {
 CardDetailWindow.propTypes = {
   state: PropTypes.object,
   route: PropTypes.object,
-  addDescription: PropTypes.func,
-  addComment: PropTypes.func,
   cardId: PropTypes.string,
   addCommentThunk: PropTypes.string,
   deleteCommentThunk: PropTypes.string,
   PutCommentThunk: PropTypes.string,
+  PutCardDescriptionThunk: PropTypes.string,
 };
 
 const mapStateToProps = state => ({
@@ -101,9 +99,8 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  addDescription,
-  addComment,
   addCommentThunk,
   deleteCommentThunk,
   PutCommentThunk,
+  PutCardDescriptionThunk,
 })(CardDetailWindow);
