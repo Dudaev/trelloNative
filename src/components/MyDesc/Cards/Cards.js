@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, Text, FlatList, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import {removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk} from '../../../redux/actions';
+import { removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk } from '../../../redux/actions';
 import AddCardInput from './AddCardInput/AddCardInput';
 import ModalWindow from '../ModalWindow';
 

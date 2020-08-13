@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, AsyncStorage } from 'react-native';
 import { getAuthUserData } from '../../redux/actions';
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,29 +21,34 @@ const SignUp = props => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const signUp = () => {
-    props.getAuthUserData(
-        email,
-        name,
-        password,
-      () => props.navigation.navigate('MyDesc'),
-    );
+    props.getAuthUserData(email, name, password, () => props.navigation.navigate('MyDesc'));
   };
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key');
+      if (value) {
+        props.navigation.navigate('SignIn');
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
-      <View style={styles.container}>
-        <TextInput style={styles.input} onChangeText={text => setEmail(text)} value={email} />
-        <TextInput style={styles.input} onChangeText={text => setName(text)} value={name} />
-        <TextInput
-            style={styles.input}
-            onChangeText={text => setPassword(text)}
-            value={password}
-        />
-        <TouchableOpacity onPress={() => signUp()}>
-          <Text style={styles.text}>ОК</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => props.navigation.navigate('SignIn')}>
-          <Text style={styles.text}>Войти</Text>
-        </TouchableOpacity>
-      </View>
+    <View style={styles.container}>
+      <TextInput style={styles.input} onChangeText={text => setEmail(text)} value={email} />
+      <TextInput style={styles.input} onChangeText={text => setName(text)} value={name} />
+      <TextInput style={styles.input} onChangeText={text => setPassword(text)} value={password} />
+      <TouchableOpacity onPress={() => signUp()}>
+        <Text style={styles.text}>ОК</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => props.navigation.navigate('SignIn')}>
+        <Text style={styles.text}>Войти</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 

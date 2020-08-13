@@ -7,6 +7,7 @@ import {
   addCommentThunk,
   addDescription,
   deleteCommentThunk,
+  PutCardDescriptionThunk,
   PutCommentThunk,
 } from '../../../../redux/actions';
 import ModalWindow from '../../ModalWindow';
@@ -23,7 +24,7 @@ function CardDetailWindow(props) {
   const card = props.state.cardsReducer.filter(postcard => postcard.id === cardId);
 
   function handleAddDescription() {
-    props.addDescription(description, cardId);
+    props.PutCardDescriptionThunk(cardId, description, props.state.authorReducer.token);
     setDescription('');
   }
 
@@ -94,6 +95,7 @@ CardDetailWindow.propTypes = {
   addCommentThunk: PropTypes.string,
   deleteCommentThunk: PropTypes.string,
   PutCommentThunk: PropTypes.string,
+  PutCardDescriptionThunk: PropTypes.string,
 };
 
 const mapStateToProps = state => ({
@@ -106,4 +108,5 @@ export default connect(mapStateToProps, {
   addCommentThunk,
   deleteCommentThunk,
   PutCommentThunk,
+  PutCardDescriptionThunk,
 })(CardDetailWindow);
