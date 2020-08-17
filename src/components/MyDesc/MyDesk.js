@@ -2,32 +2,36 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import AddListInput from './AddListInput/AddListInput';
 import { removeListThunk, setColumns, getListsThunk, PutListThunk } from '../../redux/actions';
 import ModalWindow from './ModalWindow';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    textAlign: 'center',
     paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
   },
   list: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
     borderWidth: 1,
     borderColor: '#E5E5E5',
+    marginTop: 15,
+  },
+  containerListTitle: {
+    flex: 5,
+    height: 59,
+    justifyContent: 'center',
   },
   listTitle: {
-    flex: 9,
+    fontSize: 17,
+    color: '#514D47',
+    paddingHorizontal: 15,
   },
-  delete: {
+  button: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#AC5253',
-    height: 50,
+    alignItems: 'flex-end',
     borderWidth: 1,
     borderColor: '#E5E5E5',
   },
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const MyDesc = props => {
+const MyDesk = props => {
   useEffect(() => {
     props.getListsThunk(props.state.authorReducer.token);
   }, []);
@@ -83,14 +87,17 @@ const MyDesc = props => {
           })
         }
       >
-        <Text style={styles.listTitle}>{item.title}</Text>
-        <TouchableOpacity
-          style={styles.delete}
+        <View style={styles.containerListTitle}>
+          <Text style={styles.listTitle}>{item.title}</Text>
+        </View>
+
+        {/* <TouchableOpacity
+          style={styles.button}
           onPress={() => props.removeListThunk(item.id, props.state.authorReducer.token)}
         >
           <Text>Delete</Text>
         </TouchableOpacity>
-        <ModalWindow style={styles.delete} handlePut={handlePutList} item={item} />
+        <ModalWindow style={styles.delete} handlePut={handlePutList} item={item} /> */}
       </TouchableOpacity>
     </View>
   );
@@ -98,16 +105,13 @@ const MyDesc = props => {
   return (
     <View style={styles.container}>
       <View>
-        <AddListInput />
-      </View>
-      <View>
         <FlatList data={props.state.columnsReducer} renderItem={renderItem} keyExtractor={item => item.id} />
       </View>
     </View>
   );
 };
 
-MyDesc.propTypes = {
+MyDesk.propTypes = {
   state: PropTypes.object,
   item: PropTypes.object,
   navigation: PropTypes.object,
@@ -120,4 +124,4 @@ MyDesc.propTypes = {
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { setColumns, removeListThunk, getListsThunk, PutListThunk })(MyDesc);
+export default connect(mapStateToProps, { setColumns, removeListThunk, getListsThunk, PutListThunk })(MyDesk);

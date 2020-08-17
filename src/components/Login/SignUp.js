@@ -21,7 +21,7 @@ const SignUp = props => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const signUp = () => {
-    props.getAuthUserData(email, name, password, () => props.navigation.navigate('MyDesc'));
+    props.getAuthUserData(email, name, password, () => props.navigation.navigate('MyDesk'));
   };
   const getData = async () => {
     try {

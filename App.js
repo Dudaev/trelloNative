@@ -5,12 +5,14 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import thunkMiddleware from 'redux-thunk';
+import { Button, Image, TouchableOpacity, Text } from 'react-native';
 import rootReducer from './src/redux/rootReducer';
 import Cards from './src/components/MyDesc/Cards/Cards';
 import CardDetailWindow from './src/components/MyDesc/Cards/CardDetailWindow/CardDetailWindow';
-import MyDesc from './src/components/MyDesc/MyDesc';
+import MyDesk from './src/components/MyDesc/MyDesk';
 import SignIn from './src/components/Login/SignIn';
 import SignUp from './src/components/Login/SignUp';
+import AddListInput from './src/components/MyDesc/AddListInput/AddListInput';
 
 const Stack = createStackNavigator();
 // eslint-disable-next-line no-underscore-dangle
@@ -21,12 +23,53 @@ function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              height: 95,
+            },
+            headerTitleAlign: 'center',
+            headerTintColor: '#514D47',
+            headerTitleStyle: {
+              fontSize: 17,
+            },
+          }}
+        >
           <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen
+            name="MyDesk"
+            component={MyDesk}
+            options={{
+              // eslint-disable-next-line react/display-name
+              headerRight: () => <AddListInput />,
+              title: 'My Desk',
+
+              headerRightContainerStyle: {
+                paddingRight: 15,
+              },
+            }}
+          />
+
           <Stack.Screen name="SignIn" component={SignIn} />
-          <Stack.Screen name="MyDesc" component={MyDesc} />
-          <Stack.Screen name="Cards" component={Cards} />
-          <Stack.Screen name="CardDetailWindow" component={CardDetailWindow} />
+          {/* <Stack.Screen name="MyDesc" component={MyDesc} /> */}
+          <Stack.Screen
+            name="Cards"
+            component={Cards}
+            options={{
+              // eslint-disable-next-line react/display-name
+              headerLeft: false,
+            }}
+          />
+          <Stack.Screen
+            name="CardDetailWindow"
+            component={CardDetailWindow}
+            options={{
+              // eslint-disable-next-line react/display-name
+              headerStyle: {
+                backgroundColor: '#BFB393',
+              },
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

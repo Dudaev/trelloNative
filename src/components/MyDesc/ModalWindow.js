@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal, Button } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
 import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
@@ -10,10 +10,11 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
+    flexDirection: 'row',
     margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 10,
+    padding: 15,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -24,22 +25,25 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  delete: {
-    flex: 1,
+  Put: {
+    flex: 2,
     justifyContent: 'center',
-    backgroundColor: '#AC5253',
-    height: 50,
+    alignItems: 'flex-end',
     borderWidth: 1,
     borderColor: '#E5E5E5',
+  },
+  modalButton: {
+    width: 45,
+    padding: 10,
+    backgroundColor: '#BFB393',
+    borderRadius: 25,
+    alignItems: 'center',
+  },
+  input: {
+    height: 40,
+    width: 250,
+    borderColor: '#fff',
+    marginLeft: 14,
   },
 });
 
@@ -54,20 +58,18 @@ const ModalWindow = props => {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <TextInput
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-              onChangeText={text => setTitle(text)}
-              value={title}
-            />
-            <Button title="Ok" onPress={() => PutList(props.item.id)} />
+            <TouchableOpacity style={styles.modalButton} onPress={() => PutList(props.item.id)}>
+              <Text>Ok</Text>
+            </TouchableOpacity>
+            <TextInput style={styles.input} onChangeText={text => setTitle(text)} value={title} />
           </View>
         </View>
       </Modal>
-      <TouchableOpacity style={styles.delete} onPress={() => setModalVisible(true)}>
+      <TouchableOpacity style={styles.Put} onPress={() => setModalVisible(true)}>
         <Text>Put</Text>
       </TouchableOpacity>
     </View>

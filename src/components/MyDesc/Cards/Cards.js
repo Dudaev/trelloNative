@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { View, TouchableOpacity, Text, FlatList, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, FlatList, StyleSheet, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk } from '../../../redux/actions';
 import AddCardInput from './AddCardInput/AddCardInput';
@@ -9,66 +9,28 @@ import ModalWindow from '../ModalWindow';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    textAlign: 'center',
     paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
   },
-  title: {
-    flex: 1,
-    borderBottomWidth: 1,
-    borderColor: '#E5E5E5',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
   card: {
-    flex: 1,
+    height: 66,
+    // flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     borderWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: '#fff',
+    borderBottomColor: '#E5E5E5',
+    paddingHorizontal: 10,
   },
   delete: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#AC5253',
-    height: 50,
+    alignItems: 'flex-end',
     borderWidth: 1,
     borderColor: '#E5E5E5',
   },
   cardTitle: {
     flex: 9,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
   },
 });
 
@@ -103,14 +65,15 @@ const Cards = props => {
               }
             >
               <Text style={styles.cardTitle}>{item.title}</Text>
-              <Text>COM {props.state.commentsReducer.filter(comment => comment.cardId === item.id).length} </Text>
-              <TouchableOpacity
+              <Image style={{ width: 17, height: 20, marginRight: 5 }} source={require('../../../img/user3x.png')} />
+              <Text>{props.state.commentsReducer.filter(comment => comment.cardId === item.id).length} </Text>
+              {/* <TouchableOpacity
                 style={styles.delete}
                 onPress={() => props.removeCardThunk(item.id, props.state.authorReducer.token)}
               >
                 <Text>Delete</Text>
               </TouchableOpacity>
-              <ModalWindow handlePut={handlePutCard} item={item} />
+              <ModalWindow handlePut={handlePutCard} item={item} /> */}
             </TouchableOpacity>
           </View>
         )}

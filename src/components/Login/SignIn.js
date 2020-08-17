@@ -20,7 +20,7 @@ const SignIn = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const signIn = () => {
-    props.signInThunk(email, password, () => props.navigation.navigate('MyDesc'));
+    props.signInThunk(email, password, () => props.navigation.navigate('MyDesk'));
   };
   return (
     <View style={styles.container}>
