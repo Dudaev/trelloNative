@@ -5,7 +5,6 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import thunkMiddleware from 'redux-thunk';
-import { Button, Image, TouchableOpacity, Text } from 'react-native';
 import rootReducer from './src/redux/rootReducer';
 import Cards from './src/components/MyDesc/Cards/Cards';
 import CardDetailWindow from './src/components/MyDesc/Cards/CardDetailWindow/CardDetailWindow';
@@ -47,16 +46,15 @@ function App() {
               headerRightContainerStyle: {
                 paddingRight: 15,
               },
+              headerLeft: false,
             }}
           />
 
           <Stack.Screen name="SignIn" component={SignIn} />
-          {/* <Stack.Screen name="MyDesc" component={MyDesc} /> */}
           <Stack.Screen
             name="Cards"
             component={Cards}
             options={{
-              // eslint-disable-next-line react/display-name
               headerLeft: false,
             }}
           />
@@ -64,10 +62,10 @@ function App() {
             name="CardDetailWindow"
             component={CardDetailWindow}
             options={{
-              // eslint-disable-next-line react/display-name
               headerStyle: {
                 backgroundColor: '#BFB393',
               },
+              headerTintColor: '#fff',
             }}
           />
         </Stack.Navigator>

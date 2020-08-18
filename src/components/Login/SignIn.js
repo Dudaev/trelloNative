@@ -8,11 +8,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     backgroundColor: '#FFFFFF',
   },
   input: {
     borderWidth: 1,
+    height: 50,
+    // width: 250,
+    borderColor: '#E5E5E5',
+    // marginLeft: 14,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+  },
+  button: {
+    backgroundColor: '#BFB393',
+    padding: 14,
+    borderRadius: 10,
+    marginBottom: 15,
   },
 });
 
@@ -24,9 +37,21 @@ const SignIn = props => {
   };
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} onChangeText={text => setEmail(text)} value={email} />
-      <TextInput style={styles.input} onChangeText={text => setPassword(text)} value={password} />
-      <TouchableOpacity onPress={() => signIn()}>
+      <TextInput
+        style={styles.input}
+        onChangeText={text => setEmail(text)}
+        value={email}
+        placeholder="Email..."
+        placeholderTextColor="#9C9C9C"
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={text => setPassword(text)}
+        value={password}
+        placeholder="Password..."
+        placeholderTextColor="#9C9C9C"
+      />
+      <TouchableOpacity style={styles.button} onPress={() => signIn()}>
         <Text style={styles.text}>ОК</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => props.navigation.navigate('SignUp')}>

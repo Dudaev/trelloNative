@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   addComment: {
     flexDirection: 'row',
     padding: 15,
-    // alignItems: 'center',
+    alignItems: 'center',
   },
   inputComment: {
     height: 40,
@@ -182,7 +182,7 @@ function CardDetailWindow(props) {
       />
       <View style={styles.addComment}>
         <TouchableOpacity onPress={handleAddComment}>
-          <Image style={{ width: 35, height: 40 }} source={require('../../../../img/add.png')} />
+          <Image style={{ width: 30, height: 30 }} source={require('../../../../img/messageSquare3x.png')} />
         </TouchableOpacity>
         <TextInput
           style={styles.inputComment}
