@@ -12,12 +12,10 @@ import ModalWindow from '../../ModalWindow';
 
 const styles = StyleSheet.create({
   container: {
-    // paddingHorizontal: 10,
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
   authorAndList: {
-    flex: 1,
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#E5E5E5',
@@ -35,7 +33,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   description: {
-    flex: 1,
     borderBottomWidth: 1,
     borderColor: '#E5E5E5',
   },
@@ -52,7 +49,6 @@ const styles = StyleSheet.create({
     color: '#72A8BC',
     fontSize: 13,
     fontWeight: 'bold',
-    // padding: 5,
     paddingHorizontal: 15,
   },
   comments: {
@@ -60,9 +56,11 @@ const styles = StyleSheet.create({
     borderColor: '#E5E5E5',
   },
   commentContainer: {
-    flex: 1,
     flexDirection: 'row',
     padding: 15,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#E5E5E5',
   },
   avatar: {
     paddingRight: 15,
@@ -78,6 +76,17 @@ const styles = StyleSheet.create({
   comment: {
     color: '#514D47',
     fontSize: 17,
+  },
+  addComment: {
+    flexDirection: 'row',
+    padding: 15,
+    // alignItems: 'center',
+  },
+  inputComment: {
+    height: 40,
+    width: 250,
+    // borderColor: '#fff',
+    marginLeft: 14,
   },
 });
 function CardDetailWindow(props) {
@@ -141,20 +150,6 @@ function CardDetailWindow(props) {
         </TouchableOpacity> */}
       </View>
 
-      {/* <View style={styles.commentContainer}>
-        <View style={styles.avatar}>
-          <Image style={{ width: 20, height: 20 }} source={require('../../../../img/user3x.png')} />
-        </View>
-        <View style={styles.nameAndText}>
-          <View style={styles.AuthorName}>
-            <Text>{author}</Text>
-          </View>
-          <View style={styles.comment}>
-            <Text>{item.body}</Text>
-          </View>
-        </View>
-      </View> */}
-
       <View style={styles.comments}>
         <Text style={styles.textBlue}>COMMENTS</Text>
       </View>
@@ -185,11 +180,18 @@ function CardDetailWindow(props) {
         )}
         keyExtractor={item => item.id}
       />
-
-      <TextInput onChangeText={text => setComment(text)} value={commentBody} />
-      <TouchableOpacity onPress={handleAddComment}>
-        <Text>Add comment</Text>
-      </TouchableOpacity>
+      <View style={styles.addComment}>
+        <TouchableOpacity onPress={handleAddComment}>
+          <Image style={{ width: 35, height: 40 }} source={require('../../../../img/add.png')} />
+        </TouchableOpacity>
+        <TextInput
+          style={styles.inputComment}
+          onChangeText={text => setComment(text)}
+          value={commentBody}
+          placeholder="Add a card..."
+          placeholderTextColor="#9C9C9C"
+        />
+      </View>
     </View>
   );
 }
