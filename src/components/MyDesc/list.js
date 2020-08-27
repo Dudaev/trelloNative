@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Animated, PanResponder } from 'react-native';
+import { View, Animated, PanResponder, TouchableOpacity, styles } from 'react-native';
 
 const list = () => {
   const pan = useRef(new Animated.ValueXY()).current;
