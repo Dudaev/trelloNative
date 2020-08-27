@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeListThunk, setColumns, getListsThunk, PutListThunk } from '../../redux/actions';
+import { removeListThunk, setColumns, getListsThunk, PutListThunk, switchList } from '../../redux/actions';
 import ModalWindow from './ModalWindow';
 
 const styles = StyleSheet.create({
@@ -80,12 +80,13 @@ const MyDesk = props => {
     <View>
       <TouchableOpacity
         style={styles.list}
-        onPress={() =>
+        onPress={() => {
+          props.switchList(item.id);
           props.navigation.navigate('Cards', {
             listId: item.id,
             listTitle: item.title,
-          })
-        }
+          });
+        }}
       >
         <View style={styles.containerListTitle}>
           <Text style={styles.listTitle}>{item.title}</Text>
@@ -119,9 +120,12 @@ MyDesk.propTypes = {
   removeListThunk: PropTypes.func,
   getListsThunk: PropTypes.func,
   PutListThunk: PropTypes.func,
+  switchList: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { setColumns, removeListThunk, getListsThunk, PutListThunk })(MyDesk);
+export default connect(mapStateToProps, { setColumns, removeListThunk, getListsThunk, PutListThunk, switchList })(
+  MyDesk,
+);

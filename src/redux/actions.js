@@ -1,6 +1,15 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-import { SET_TOKEN, SET_COLUMNS, SET_CARDS, REMOVE_CARD_COMMENTS, SET_COMMENTS, SET_AUTHOR } from './types';
+import {
+  SET_TOKEN,
+  SET_COLUMNS,
+  SET_CARDS,
+  REMOVE_CARD_COMMENTS,
+  SET_COMMENTS,
+  SET_AUTHOR,
+  SWITCH_CARD,
+  SWITCH_LIST,
+} from './types';
 
 export const setToken = token => ({
   type: SET_TOKEN,

@@ -8,6 +8,6 @@ module.exports = {
     node: true,
   },
   rules:{
-    "linebreak-style": 0,
-  },
+    "linebreak-style": 0
+  }
 };

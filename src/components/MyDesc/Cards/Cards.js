@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, Text, FlatList, StyleSheet, Image } from 'react-native';
 import PropTypes from 'prop-types';
-import { removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk } from '../../../redux/actions';
+import { removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk, switchСard } from '../../../redux/actions';
 import AddCardInput from './AddCardInput/AddCardInput';
 import ModalWindow from '../ModalWindow';
 
@@ -54,15 +54,16 @@ const Cards = props => {
           <View>
             <TouchableOpacity
               style={styles.card}
-              onPress={() =>
+              onPress={() => {
+                props.switchСard(item.id);
                 props.navigation.navigate('CardDetailWindow', {
                   listTitle,
                   cardId: item.id,
                   cardTitle: item.title,
                   cardDescription: item.description,
                   author: props.state.authorReducer.name,
-                })
-              }
+                });
+              }}
             >
               <Text style={styles.cardTitle}>{item.title}</Text>
               <Image style={{ width: 17, height: 20, marginRight: 5 }} source={require('../../../img/user3x.png')} />
@@ -92,9 +93,12 @@ Cards.propTypes = {
   PutCardThunk: PropTypes.func,
   getCommentsThunk: PropTypes.func,
   getCardsThunk: PropTypes.func,
+  switchСard: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk })(Cards);
+export default connect(mapStateToProps, { switchСard, removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk })(
+  Cards,
+);
