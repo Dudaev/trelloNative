@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { SwipeItem, SwipeButtonsContainer } from 'react-native-swipe-item';
-import { removeListThunk, setColumns, getListsThunk, PutListThunk } from '../../redux/actions';
 import ModalWindow from './ModalWindow';
 
 const styles = StyleSheet.create({
@@ -79,6 +77,17 @@ const styles = StyleSheet.create({
     borderColor: '#e3e3e3',
     borderWidth: 1,
   },
+  delete: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+    height: 59,
+    width: 70,
+    backgroundColor: '#AC5253',
+    borderRadius: 5,
+  },
 });
 
 const List = props => {
@@ -91,7 +100,7 @@ const List = props => {
         padding: 10,
       }}
     >
-      <ModalWindow style={styles.delete} handlePut={props.handlePutList} item={props.item} />
+      <ModalWindow handlePut={props.handlePutList} item={props.item} />
     </SwipeButtonsContainer>
   );
   const rightButtons = (
@@ -103,8 +112,8 @@ const List = props => {
         padding: 10,
       }}
     >
-      <TouchableOpacity onPress={() => props.removeListThunk(props.item.id, props.token)}>
-        <Text>Remove !</Text>
+      <TouchableOpacity style={styles.delete} onPress={() => props.removeListThunk(props.item.id, props.token)}>
+        <Text>Delete</Text>
       </TouchableOpacity>
     </SwipeButtonsContainer>
   );
@@ -128,14 +137,6 @@ const List = props => {
           <View style={styles.containerListTitle}>
             <Text style={styles.listTitle}>{props.item.title}</Text>
           </View>
-
-          {/* <TouchableOpacity
-          style={styles.button}
-          onPress={() => props.removeListThunk(item.id, props.state.authorReducer.token)}
-        >
-          <Text>Delete</Text>
-        </TouchableOpacity>
-        <ModalWindow style={styles.delete} handlePut={handlePutList} item={item} /> */}
         </TouchableOpacity>
       </SwipeItem>
     </View>
@@ -145,6 +146,9 @@ const List = props => {
 List.propTypes = {
   item: PropTypes.object,
   navigation: PropTypes.object,
+  token: PropTypes.object,
+  handlePutList: PropTypes.func,
+  removeListThunk: PropTypes.func,
 };
 
 export default List;

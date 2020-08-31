@@ -28,9 +28,13 @@ const styles = StyleSheet.create({
   Put: {
     flex: 2,
     justifyContent: 'center',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#E5E5E5',
+    height: 59,
+    width: 70,
+    backgroundColor: '#BFB393',
+    borderRadius: 5,
   },
   modalButton: {
     width: 45,

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Text, TextInput, TouchableOpacity, View, FlatList, StyleSheet, Image } from 'react-native';
 import PropTypes from 'prop-types';
+import { SwipeItem, SwipeButtonsContainer } from 'react-native-swipe-item';
 import {
   addCommentThunk,
   deleteCommentThunk,
@@ -9,6 +10,7 @@ import {
   PutCommentThunk,
 } from '../../../../redux/actions';
 import ModalWindow from '../../ModalWindow';
+import Comment from './Comment';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,6 +37,9 @@ const styles = StyleSheet.create({
   description: {
     borderBottomWidth: 1,
     borderColor: '#E5E5E5',
+    minHeight: 90,
+    maxHeight: 100,
+    backgroundColor: '#fff',
   },
   colorText: {
     color: '#BFB393',
@@ -85,13 +90,30 @@ const styles = StyleSheet.create({
   inputComment: {
     height: 40,
     width: 250,
-    // borderColor: '#fff',
     marginLeft: 14,
+  },
+  swipeButton: {
+    // height: 70,
+  },
+  delete: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+    height: 59,
+    width: 70,
+    backgroundColor: '#AC5253',
+    borderRadius: 5,
+  },
+  titleContainer: {
+    backgroundColor: '#fff',
+    height: 100,
   },
 });
 function CardDetailWindow(props) {
   const [commentBody, setComment] = useState('');
-  const [description, setDescription] = useState('');
+  // const [description, setDescription] = useState('');
 
   const { listTitle } = props.route.params;
   const { author } = props.route.params;
@@ -100,9 +122,9 @@ function CardDetailWindow(props) {
   const comments = props.state.commentsReducer.filter(commentary => commentary.cardId === cardId);
   const card = props.state.cardsReducer.filter(postcard => postcard.id === cardId);
 
-  function handleAddDescription() {
-    props.PutCardDescriptionThunk(cardId, description, props.state.authorReducer.token);
-    setDescription('');
+  function deleteDescription() {
+    props.PutCardDescriptionThunk(cardId, '', props.state.authorReducer.token);
+    // setDescription('');
   }
 
   function handleAddComment() {
@@ -114,17 +136,43 @@ function CardDetailWindow(props) {
     props.PutCommentThunk(CommentId, title, props.state.authorReducer.token);
   }
 
+  function handlePutDescription(id, title) {
+    props.PutCardDescriptionThunk(id, title, props.state.authorReducer.token);
+  }
+
   function handleDeleteComment(commentId) {
     props.deleteCommentThunk(commentId, props.state.authorReducer.token);
   }
 
+  const leftButton = (
+    <SwipeButtonsContainer
+      style={{
+        alignSelf: 'center',
+        aspectRatio: 1,
+        flexDirection: 'column',
+        padding: 10,
+      }}
+    >
+      <ModalWindow handlePut={handlePutDescription} item={card[0]} />
+    </SwipeButtonsContainer>
+  );
+  const rightButtons = (
+    <SwipeButtonsContainer
+      style={{
+        alignSelf: 'center',
+        aspectRatio: 1,
+        flexDirection: 'column',
+        padding: 10,
+      }}
+    >
+      <TouchableOpacity style={styles.delete} onPress={() => deleteDescription()}>
+        <Text>Delete</Text>
+      </TouchableOpacity>
+    </SwipeButtonsContainer>
+  );
+
   return (
     <View style={styles.container}>
-      {/* <View>
-        <Text>CardHeader: {card[0].title}</Text>
-      </View>
-      имя карточки будет в заголовке */}
-
       <View style={styles.authorAndList}>
         <View style={styles.inList}>
           <Text style={styles.colorText}>{listTitle}</Text>
@@ -141,13 +189,20 @@ function CardDetailWindow(props) {
         </View>
       </View>
 
-      <View style={styles.description}>
-        <Text style={styles.textBlue}>DESCRIPTION</Text>
-        <Text style={styles.text}>{card[0].description}</Text>
-        {/* <TextInput onChangeText={text => setDescription(text)} value={description} />
-        <TouchableOpacity onPress={handleAddDescription}>
-          <Text>Save description</Text>
-        </TouchableOpacity> */}
+      <View>
+        <View style={styles.description}>
+          <SwipeItem
+            style={styles.swipeButton}
+            swipeContainerStyle={styles.swipeContentContainerStyle}
+            leftButtons={leftButton}
+            rightButtons={rightButtons}
+          >
+            <View style={styles.titleContainer}>
+              <Text style={styles.textBlue}>DESCRIPTION</Text>
+              <Text style={styles.text}>{card[0].description}</Text>
+            </View>
+          </SwipeItem>
+        </View>
       </View>
 
       <View style={styles.comments}>
@@ -156,27 +211,12 @@ function CardDetailWindow(props) {
       <FlatList
         data={comments}
         renderItem={({ item }) => (
-          <View>
-            {/* <Text>Comment: {item.body}</Text>
-            <Text>Author: {author}</Text> */}
-            <View style={styles.commentContainer}>
-              <View style={styles.avatar}>
-                <Image style={{ width: 35, height: 40 }} source={require('../../../../img/user3x.png')} />
-              </View>
-              <View style={styles.nameAndText}>
-                <View>
-                  <Text style={styles.authorNameText}>{author}</Text>
-                </View>
-                <View>
-                  <Text style={styles.comment}>{item.body}</Text>
-                </View>
-              </View>
-            </View>
-            {/* <TouchableOpacity onPress={() => handleDeleteComment(item.id)}>
-              <Text>delete</Text>
-            </TouchableOpacity>
-            <ModalWindow handlePut={handlePutComment} item={item} /> */}
-          </View>
+          <Comment
+            author={author}
+            handlePutComment={handlePutComment}
+            item={item}
+            handleDeleteComment={handleDeleteComment}
+          />
         )}
         keyExtractor={item => item.id}
       />

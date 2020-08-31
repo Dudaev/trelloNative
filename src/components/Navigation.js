@@ -38,6 +38,7 @@ function Navigation() {
             headerRightContainerStyle: {
               paddingRight: 15,
             },
+            headerLeft: false,
           }}
         />
 
@@ -55,6 +56,7 @@ function Navigation() {
             headerStyle: {
               backgroundColor: '#BFB393',
             },
+            headerTintColor: '#fff',
           })}
         />
       </Stack.Navigator>
