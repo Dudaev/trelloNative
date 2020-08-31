@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { SwipeItem, SwipeButtonsContainer } from 'react-native-swipe-item';
 import { removeListThunk, setColumns, getListsThunk, PutListThunk } from '../../redux/actions';
 import ModalWindow from './ModalWindow';
+import List from './List';
 
 const styles = StyleSheet.create({
   container: {
@@ -65,6 +67,20 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
   },
+  swipeButton: {
+    width: '80%',
+    height: 100,
+    alignSelf: 'center',
+    marginVertical: 5,
+  },
+  swipeContentContainerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    borderColor: '#e3e3e3',
+    borderWidth: 1,
+  },
 });
 
 const MyDesk = props => {
@@ -77,29 +93,51 @@ const MyDesk = props => {
   }
 
   const renderItem = ({ item }) => (
-    <View>
-      <TouchableOpacity
-        style={styles.list}
-        onPress={() => {
-          props.navigation.navigate('Cards', {
-            listId: item.id,
-            listTitle: item.title,
-          });
-        }}
-      >
-        <View style={styles.containerListTitle}>
-          <Text style={styles.listTitle}>{item.title}</Text>
-        </View>
+    <List
+      item={item}
+      navigation={props.navigation}
+      removeListThunk={props.removeListThunk}
+      token={props.state.authorReducer.token}
+      handlePutList={handlePutList}
+    />
+    // <View>
+    //   <TouchableOpacity
+    //     style={styles.list}
+    //     onPress={() => {
+    //       props.navigation.navigate('Cards', {
+    //         listId: item.id,
+    //         listTitle: item.title,
+    //       });
+    //     }}
+    //   >
+    //     <View style={styles.containerListTitle}>
+    //       <Text style={styles.listTitle}>{item.title}</Text>
+    //     </View>
+    //
+    //     {/* <TouchableOpacity
+    //       style={styles.button}
+    //       onPress={() => props.removeListThunk(item.id, props.state.authorReducer.token)}
+    //     >
+    //       <Text>Delete</Text>
+    //     </TouchableOpacity>
+    //     <ModalWindow style={styles.delete} handlePut={handlePutList} item={item} /> */}
+    //   </TouchableOpacity>
+    // </View>
+  );
 
-        {/* <TouchableOpacity
-          style={styles.button}
-          onPress={() => props.removeListThunk(item.id, props.state.authorReducer.token)}
-        >
-          <Text>Delete</Text>
-        </TouchableOpacity>
-        <ModalWindow style={styles.delete} handlePut={handlePutList} item={item} /> */}
+  const leftButton = (
+    <SwipeButtonsContainer
+      style={{
+        alignSelf: 'center',
+        aspectRatio: 1,
+        flexDirection: 'column',
+        padding: 10,
+      }}
+    >
+      <TouchableOpacity onPress={() => console.log('left button clicked')}>
+        <Text>Click me !</Text>
       </TouchableOpacity>
-    </View>
+    </SwipeButtonsContainer>
   );
 
   return (
@@ -107,6 +145,13 @@ const MyDesk = props => {
       <View>
         <FlatList data={props.state.columnsReducer} renderItem={renderItem} keyExtractor={item => item.id} />
       </View>
+      {/* <SwipeItem
+        style={styles.swipeButton}
+        swipeContainerStyle={styles.swipeContentContainerStyle}
+        leftButtons={leftButton}
+      >
+        <Text>Swipe me!</Text>
+      </SwipeItem> */}
     </View>
   );
 };
@@ -124,6 +169,4 @@ MyDesk.propTypes = {
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { setColumns, removeListThunk, getListsThunk, PutListThunk })(
-  MyDesk,
-);
+export default connect(mapStateToProps, { setColumns, removeListThunk, getListsThunk, PutListThunk })(MyDesk);
