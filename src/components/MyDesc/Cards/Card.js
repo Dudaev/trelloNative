@@ -100,8 +100,8 @@ Card.propTypes = {
   navigation: PropTypes.object,
   item: PropTypes.object,
   state: PropTypes.object,
-  listTitle: PropTypes.object,
-  token: PropTypes.object,
+  listTitle: PropTypes.string,
+  token: PropTypes.string,
   removeCardThunk: PropTypes.func,
   handlePutCard: PropTypes.func,
 };

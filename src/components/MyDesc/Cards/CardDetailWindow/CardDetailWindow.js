@@ -218,7 +218,7 @@ function CardDetailWindow(props) {
             handleDeleteComment={handleDeleteComment}
           />
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
       />
       <View style={styles.addComment}>
         <TouchableOpacity onPress={handleAddComment}>
@@ -240,10 +240,10 @@ CardDetailWindow.propTypes = {
   state: PropTypes.object,
   route: PropTypes.object,
   cardId: PropTypes.string,
-  addCommentThunk: PropTypes.string,
-  deleteCommentThunk: PropTypes.string,
-  PutCommentThunk: PropTypes.string,
-  PutCardDescriptionThunk: PropTypes.string,
+  addCommentThunk: PropTypes.func,
+  deleteCommentThunk: PropTypes.func,
+  PutCommentThunk: PropTypes.func,
+  PutCardDescriptionThunk: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

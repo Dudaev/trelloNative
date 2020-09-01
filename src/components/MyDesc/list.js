@@ -146,7 +146,7 @@ const List = props => {
 List.propTypes = {
   item: PropTypes.object,
   navigation: PropTypes.object,
-  token: PropTypes.object,
+  token: PropTypes.string,
   handlePutList: PropTypes.func,
   removeListThunk: PropTypes.func,
 };

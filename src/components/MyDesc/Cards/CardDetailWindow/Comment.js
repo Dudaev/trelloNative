@@ -156,7 +156,7 @@ Comment.propTypes = {
   handleDeleteComment: PropTypes.func,
   handlePutComment: PropTypes.func,
   item: PropTypes.object,
-  author: PropTypes.object,
+  author: PropTypes.string,
 };
 
 export default Comment;

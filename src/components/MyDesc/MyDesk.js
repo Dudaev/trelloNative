@@ -103,7 +103,7 @@ const MyDesk = props => {
   return (
     <View style={styles.container}>
       <View>
-        <FlatList data={props.state.columnsReducer} renderItem={renderItem} keyExtractor={item => item.id} />
+        <FlatList data={props.state.columnsReducer} renderItem={renderItem} keyExtractor={item => item.id.toString()} />
       </View>
     </View>
   );

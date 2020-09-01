@@ -59,7 +59,7 @@ const Cards = props => {
             handlePutCard={handlePutCard}
           />
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
       />
     </View>
   );
