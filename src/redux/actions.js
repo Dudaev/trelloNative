@@ -1,6 +1,16 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-import { SET_TOKEN, SET_COLUMNS, SET_CARDS, REMOVE_CARD_COMMENTS, SET_COMMENTS, SET_AUTHOR } from './types';
+import {
+  SET_TOKEN,
+  SET_COLUMNS,
+  SET_CARDS,
+  REMOVE_CARD_COMMENTS,
+  SET_COMMENTS,
+  SET_AUTHOR,
+  UPDATE_LIST_REQUEST,
+  UPDATE_LIST_FAILURE,
+  UPDATE_LIST_SUCCESS,
+} from './types';
 
 export const setToken = token => ({
   type: SET_TOKEN,
@@ -22,9 +32,10 @@ export const setComments = comments => ({
   comments,
 });
 
-export const setAuthor = author => ({
+export const setAuthor = (author, fetching) => ({
   type: SET_AUTHOR,
   author,
+  isFetching: fetching,
 });
 
 export const removeCardComments = cardId => ({
@@ -32,23 +43,47 @@ export const removeCardComments = cardId => ({
   cardId,
 });
 
+export const updateListRequest = () => ({
+  type: UPDATE_LIST_REQUEST,
+});
+
+export const updateListFailure = error => ({
+  type: UPDATE_LIST_FAILURE,
+  error,
+});
+
+export const updateListSuccess = (id, title) => ({
+  type: UPDATE_LIST_SUCCESS,
+  id,
+  title,
+});
+
 const storeData = async () => {
   try {
-    await AsyncStorage.setItem('@storage_Key', '1');
+    await AsyncStorage.setItem('token', '1');
   } catch (e) {
     // saving error
   }
 };
 
 export const getAuthUserData = (email, name, password, navigationMyDesc) => dispatch => {
+  // dispatch({
+  //   type: REQUEST,
+  // });
   axios
     .post(`http://trello-purrweb.herokuapp.com/auth/sign-up`, {
       email,
       name,
       password,
     })
+    .catch(error => {
+      dispatch({
+        type: FAILED_REQUEST,
+        error,
+      });
+    })
     .then(response => {
-      dispatch(setAuthor(response.data));
+      dispatch(setAuthor(response.data, false));
       const token = `Bearer ${response.data.token}`;
       dispatch(setToken(token));
       navigationMyDesc();
@@ -70,7 +105,8 @@ export const signInThunk = (email, password, navigationMyDesc) => dispatch => {
     });
 };
 
-export const getListsThunk = token => dispatch => {
+export const getListsThunk = () => (dispatch, { getState }) => {
+  const { token } = getState().author;
   axios
     .get(`http://trello-purrweb.herokuapp.com/columns`, {
       headers: { Authorization: token },
@@ -107,7 +143,8 @@ export const removeListThunk = (id, token) => dispatch => {
     });
 };
 
-export const PutListThunk = (id, title, token) => dispatch => {
+export const updateList = (id, title, token) => dispatch => {
+  dispatch(updateListRequest());
   axios
     .put(
       `http://trello-purrweb.herokuapp.com/columns/${id}`,
@@ -118,8 +155,12 @@ export const PutListThunk = (id, title, token) => dispatch => {
         headers: { Authorization: token },
       },
     )
+    .catch(error => {
+      dispatch(updateListFailure(error));
+    })
     .then(() => {
-      dispatch(getListsThunk(token));
+      // dispatch(getListsThunk(token));
+      dispatch(updateListSuccess(id, title));
     });
 };
 

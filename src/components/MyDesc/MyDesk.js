@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeListThunk, setColumns, getListsThunk, PutListThunk } from '../../redux/actions';
+import { removeListThunk, setColumns, getListsThunk, updateList } from '../../redux/actions';
 import List from './List';
 
 const styles = StyleSheet.create({
@@ -87,7 +87,7 @@ const MyDesk = props => {
   }, []);
 
   function handlePutList(listId, title) {
-    props.PutListThunk(listId, title, props.state.authorReducer.token);
+    props.updateList(listId, title, props.state.authorReducer.token);
   }
 
   const renderItem = ({ item }) => (
@@ -103,7 +103,11 @@ const MyDesk = props => {
   return (
     <View style={styles.container}>
       <View>
-        <FlatList data={props.state.columnsReducer} renderItem={renderItem} keyExtractor={item => item.id.toString()} />
+        <FlatList
+          data={props.state.columnsReducer.columns}
+          renderItem={renderItem}
+          keyExtractor={item => item.id.toString()}
+        />
       </View>
     </View>
   );
@@ -116,10 +120,10 @@ MyDesk.propTypes = {
   getColumns: PropTypes.func,
   removeListThunk: PropTypes.func,
   getListsThunk: PropTypes.func,
-  PutListThunk: PropTypes.func,
+  updateList: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { setColumns, removeListThunk, getListsThunk, PutListThunk })(MyDesk);
+export default connect(mapStateToProps, { setColumns, removeListThunk, getListsThunk, updateList })(MyDesk);

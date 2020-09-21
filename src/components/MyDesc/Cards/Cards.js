@@ -39,7 +39,7 @@ const Cards = props => {
   }, []);
   const { listTitle } = props.route.params;
   const { listId } = props.route.params;
-  const cards = props.state.cardsReducer.filter(card => card.columnId === listId);
+  const cards = props.state.cardsReducer.cards.filter(card => card.columnId === listId);
   function handlePutCard(cardId, title) {
     props.PutCardThunk(cardId, title, props.state.authorReducer.token);
   }

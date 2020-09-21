@@ -120,7 +120,7 @@ function CardDetailWindow(props) {
   const { cardId } = props.route.params;
 
   const comments = props.state.commentsReducer.filter(commentary => commentary.cardId === cardId);
-  const card = props.state.cardsReducer.filter(postcard => postcard.id === cardId);
+  const card = props.state.cardsReducer.cards.filter(postcard => postcard.id === cardId);
 
   function deleteDescription() {
     props.PutCardDescriptionThunk(cardId, '', props.state.authorReducer.token);
