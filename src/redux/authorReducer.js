@@ -17,7 +17,6 @@ const authorReducer = (
     case SING_UP_REQUEST:
       return { ...state, isFetchingUp: true };
     case SING_UP_FAILURE:
-      console.log(action.error);
       return { ...state, errorUp: action.error, isFetchingUp: false };
     case SING_IN_REQUEST:
       return { ...state, isFetchingIn: true };
