@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, FlatList, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import { removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk } from '../../../redux/actions';
+import { removeCard, updateCard, getCards, getComments } from '../../../redux/actions';
 import AddCardInput from './AddCardInput/AddCardInput';
 import Card from './Card';
 
@@ -79,4 +79,4 @@ Cards.propTypes = {
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { removeCardThunk, PutCardThunk, getCardsThunk, getCommentsThunk })(Cards);
+export default connect(mapStateToProps, { removeCardThunk: removeCard, PutCardThunk: updateCard, getCardsThunk: getCards, getCommentsThunk: getComments })(Cards);

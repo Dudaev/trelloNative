@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { signInThunk } from '../../redux/actions';
+import { signIn } from '../../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
 const SignIn = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const signIn = () => {
-    props.signInThunk(email, password, () => props.navigation.navigate('MyDesk'));
+  const handleSignIn = () => {
+    props.signIn(email, password, () => props.navigation.navigate('MyDesk'));
   };
   return (
     <View style={styles.container}>
@@ -51,7 +51,7 @@ const SignIn = props => {
         placeholder="Password..."
         placeholderTextColor="#9C9C9C"
       />
-      <TouchableOpacity style={styles.button} onPress={() => signIn()}>
+      <TouchableOpacity style={styles.button} onPress={() => handleSignIn()}>
         <Text style={styles.text}>ОК</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => props.navigation.navigate('SignUp')}>
@@ -63,7 +63,7 @@ const SignIn = props => {
 
 SignIn.propTypes = {
   navigation: PropTypes.object,
-  signInThunk: PropTypes.func,
+  signIn: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -71,5 +71,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  signInThunk,
+  signIn,
 })(SignIn);

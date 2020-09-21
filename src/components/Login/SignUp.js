@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, AsyncStorage } from 'react-native';
-import { getAuthUserData } from '../../redux/actions';
+import { signUp } from '../../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -97,4 +97,4 @@ const mapStateToProps = state => ({
   state,
 });
 
-export default connect(mapStateToProps, { getAuthUserData })(SignUp);
+export default connect(mapStateToProps, { getAuthUserData: signUp })(SignUp);

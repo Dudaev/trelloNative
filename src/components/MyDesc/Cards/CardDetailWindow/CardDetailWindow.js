@@ -4,10 +4,10 @@ import { Text, TextInput, TouchableOpacity, View, FlatList, StyleSheet, Image } 
 import PropTypes from 'prop-types';
 import { SwipeItem, SwipeButtonsContainer } from 'react-native-swipe-item';
 import {
-  addCommentThunk,
-  deleteCommentThunk,
-  PutCardDescriptionThunk,
-  PutCommentThunk,
+  addComment,
+  deleteComment,
+  updateCardDescription,
+  updateComment,
 } from '../../../../redux/actions';
 import ModalWindow from '../../ModalWindow';
 import Comment from './Comment';
@@ -251,8 +251,8 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  addCommentThunk,
-  deleteCommentThunk,
-  PutCommentThunk,
-  PutCardDescriptionThunk,
+  addCommentThunk: addComment,
+  deleteCommentThunk: deleteComment,
+  PutCommentThunk: updateComment,
+  PutCardDescriptionThunk: updateCardDescription,
 })(CardDetailWindow);
