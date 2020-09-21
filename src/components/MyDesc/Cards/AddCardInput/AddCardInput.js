@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native';
 import PropTypes from 'prop-types';
-import { addCardThunk } from '../../../../redux/actions';
+import { addCard } from '../../../../redux/actions';
 
 const styles = StyleSheet.create({
   input: {
@@ -53,4 +53,4 @@ AddCardInput.propTypes = {
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { addCardThunk })(AddCardInput);
+export default connect(mapStateToProps, { addCardThunk: addCard })(AddCardInput);

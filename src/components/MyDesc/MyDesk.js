@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeListThunk, setColumns, getListsThunk, updateList } from '../../redux/actions';
+import { removeList, setColumns, getLists, updateList } from '../../redux/actions';
 import List from './List';
 
 const styles = StyleSheet.create({
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 
 const MyDesk = props => {
   useEffect(() => {
-    props.getListsThunk(props.state.authorReducer.token);
+    props.getLists(props.state.authorReducer.token);
   }, []);
 
   function handlePutList(listId, title) {
@@ -119,11 +119,11 @@ MyDesk.propTypes = {
   navigation: PropTypes.object,
   getColumns: PropTypes.func,
   removeListThunk: PropTypes.func,
-  getListsThunk: PropTypes.func,
+  getLists: PropTypes.func,
   updateList: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { setColumns, removeListThunk, getListsThunk, updateList })(MyDesk);
+export default connect(mapStateToProps, { setColumns, removeListThunk: removeList, getLists, updateList })(MyDesk);

@@ -3,7 +3,7 @@ import { StyleSheet, View, TextInput, TouchableOpacity, Modal, Image } from 'rea
 import PropTypes from 'prop-types';
 import uid from 'uid';
 import { connect } from 'react-redux';
-import { addListThunk } from '../../../redux/actions';
+import { addList } from '../../../redux/actions';
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -98,4 +98,4 @@ const mapStateToProps = state => ({
   state,
 });
 
-export default connect(mapStateToProps, { addListThunk })(AddListInput);
+export default connect(mapStateToProps, { addListThunk: addList })(AddListInput);
