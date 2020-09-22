@@ -88,7 +88,9 @@ const Card = props => {
           >
             <Text style={styles.cardTitle}>{props.item.title}</Text>
             <Image style={{ width: 17, height: 20, marginRight: 5 }} source={require('../../../img/user3x.png')} />
-            <Text>{props.state.commentsReducer.filter(comment => comment.cardId === props.item.id).length} </Text>
+            <Text>
+              {props.state.commentsReducer.comments.filter(comment => comment.cardId === props.item.id).length}{' '}
+            </Text>
           </TouchableOpacity>
         </View>
       </SwipeItem>

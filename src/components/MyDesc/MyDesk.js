@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeList, setColumns, getLists, updateList } from '../../redux/actions';
+import { removeList, getLists, updateList } from '../../redux/actions';
 import List from './List';
 
 const styles = StyleSheet.create({
@@ -126,4 +126,4 @@ MyDesk.propTypes = {
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { setColumns, removeListThunk: removeList, getLists, updateList })(MyDesk);
+export default connect(mapStateToProps, { removeListThunk: removeList, getLists, updateList })(MyDesk);

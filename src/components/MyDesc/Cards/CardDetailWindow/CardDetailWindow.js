@@ -3,12 +3,7 @@ import { connect } from 'react-redux';
 import { Text, TextInput, TouchableOpacity, View, FlatList, StyleSheet, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { SwipeItem, SwipeButtonsContainer } from 'react-native-swipe-item';
-import {
-  addComment,
-  deleteComment,
-  updateCardDescription,
-  updateComment,
-} from '../../../../redux/actions';
+import { addComment, deleteComment, updateCardDescription, updateComment } from '../../../../redux/actions';
 import ModalWindow from '../../ModalWindow';
 import Comment from './Comment';
 
@@ -119,7 +114,7 @@ function CardDetailWindow(props) {
   const { author } = props.route.params;
   const { cardId } = props.route.params;
 
-  const comments = props.state.commentsReducer.filter(commentary => commentary.cardId === cardId);
+  const comments = props.state.commentsReducer.comments.filter(commentary => commentary.cardId === cardId);
   const card = props.state.cardsReducer.cards.filter(postcard => postcard.id === cardId);
 
   function deleteDescription() {

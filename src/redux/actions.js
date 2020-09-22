@@ -2,10 +2,7 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import {
   SET_TOKEN,
-  SET_COLUMNS,
-  SET_CARDS,
   REMOVE_CARD_COMMENTS,
-  SET_COMMENTS,
   SET_AUTHOR,
   UPDATE_LIST_REQUEST,
   UPDATE_LIST_FAILURE,
@@ -14,26 +11,47 @@ import {
   SING_UP_FAILURE,
   SING_IN_REQUEST,
   SING_IN_FAILURE,
+  GET_LISTS_REQUEST,
+  GET_LISTS_FAILURE,
+  GET_LISTS_SUCCESS,
+  ADD_LIST_REQUEST,
+  ADD_LIST_FAILURE,
+  ADD_LIST_SUCCESS,
+  REMOVE_LIST_REQUEST,
+  REMOVE_LIST_FAILURE,
+  REMOVE_LIST_SUCCESS,
+  GET_CARDS_REQUEST,
+  GET_CARDS_FAILURE,
+  GET_CARDS_SUCCESS,
+  ADD_CARD_REQUEST,
+  ADD_CARD_FAILURE,
+  ADD_CARD_SUCCESS,
+  REMOVE_CARD_REQUEST,
+  REMOVE_CARD_FAILURE,
+  REMOVE_CARD_SUCCESS,
+  UPDATE_CARD_REQUEST,
+  UPDATE_CARD_FAILURE,
+  UPDATE_CARD_SUCCESS,
+  UPDATE_CARD_DESCRIPTION_REQUEST,
+  UPDATE_CARD_DESCRIPTION_FAILURE,
+  UPDATE_CARD_DESCRIPTION_SUCCESS,
+  GET_COMMENTS_REQUEST,
+  GET_COMMENTS_FAILURE,
+  GET_COMMENTS_SUCCESS,
+  ADD_COMMENT_REQUEST,
+  ADD_COMMENT_FAILURE,
+  ADD_COMMENT_SUCCESS,
+  DELETE_COMMENT_REQUEST,
+  DELETE_COMMENT_FAILURE,
+  DELETE_COMMENT_SUCCESS,
+  UPDATE_COMMENT_REQUEST,
+  UPDATE_COMMENT_FAILURE,
+  UPDATE_COMMENT_SUCCESS,
 } from './types';
 
 export const setToken = token => ({
   type: SET_TOKEN,
   token,
-});
-
-export const setColumns = columns => ({
-  type: SET_COLUMNS,
-  columns,
-});
-
-export const setCards = cards => ({
-  type: SET_CARDS,
-  cards,
-});
-
-export const setComments = comments => ({
-  type: SET_COMMENTS,
-  comments,
 });
 
 export const setAuthor = (id, email, name, token) => ({
@@ -64,6 +82,20 @@ export const updateListSuccess = (id, title) => ({
   title,
 });
 
+export const getListsRequest = () => ({
+  type: GET_LISTS_REQUEST,
+});
+
+export const getListsFailure = error => ({
+  type: GET_LISTS_FAILURE,
+  error,
+});
+
+export const getListsSuccess = columns => ({
+  type: GET_LISTS_SUCCESS,
+  columns,
+});
+
 export const signUpRequest = () => ({
   type: SING_UP_REQUEST,
 });
@@ -89,6 +121,158 @@ const storeData = async () => {
     // saving error
   }
 };
+
+export const addListRequest = () => ({
+  type: ADD_LIST_REQUEST,
+});
+
+export const addListFailure = error => ({
+  type: ADD_LIST_FAILURE,
+  error,
+});
+
+export const addListSuccess = (id, title, userId) => ({
+  type: ADD_LIST_SUCCESS,
+  id,
+  title,
+  userId,
+});
+
+export const removeListRequest = () => ({
+  type: REMOVE_LIST_REQUEST,
+});
+
+export const removeListFailure = error => ({
+  type: REMOVE_LIST_FAILURE,
+  error,
+});
+
+export const removeListSuccess = id => ({
+  type: REMOVE_LIST_SUCCESS,
+  id,
+});
+
+export const getCardsRequest = () => ({
+  type: GET_CARDS_REQUEST,
+});
+
+export const getCardsFailure = error => ({
+  type: GET_CARDS_FAILURE,
+  error,
+});
+
+export const getCardsSuccess = cards => ({
+  type: GET_CARDS_SUCCESS,
+  cards,
+});
+
+export const addCardRequest = () => ({
+  type: ADD_CARD_REQUEST,
+});
+
+export const addCardFailure = error => ({
+  type: ADD_CARD_FAILURE,
+  error,
+});
+
+export const addCardSuccess = (title, description, checked, column, id) => ({
+  type: ADD_CARD_SUCCESS,
+  title,
+  description,
+  checked,
+  column,
+  id,
+});
+
+export const removeCardRequest = () => ({
+  type: REMOVE_CARD_REQUEST,
+});
+
+export const removeCardFailure = error => ({
+  type: REMOVE_CARD_FAILURE,
+  error,
+});
+
+export const removeCardSuccess = id => ({
+  type: REMOVE_CARD_SUCCESS,
+  id,
+});
+
+export const updateCardRequest = () => ({
+  type: UPDATE_CARD_REQUEST,
+});
+
+export const updateCardFailure = error => ({
+  type: UPDATE_CARD_FAILURE,
+  error,
+});
+
+export const updateCardSuccess = (id, title) => ({
+  type: UPDATE_CARD_SUCCESS,
+  id,
+  title,
+});
+
+export const updateCardDescriptionRequest = () => ({
+  type: UPDATE_CARD_DESCRIPTION_REQUEST,
+});
+
+export const updateCardDescriptionFailure = error => ({
+  type: UPDATE_CARD_DESCRIPTION_FAILURE,
+  error,
+});
+
+export const updateCardDescriptionSuccess = (id, description) => ({
+  type: UPDATE_CARD_DESCRIPTION_SUCCESS,
+  id,
+  description,
+});
+
+export const getCommentsRequest = () => ({
+  type: GET_COMMENTS_REQUEST,
+});
+
+export const getCommentsFailure = error => ({
+  type: GET_COMMENTS_FAILURE,
+  error,
+});
+
+export const getCommentsSuccess = comments => ({
+  type: GET_COMMENTS_SUCCESS,
+  comments,
+});
+
+export const addCommentRequest = () => ({
+  type: ADD_COMMENT_REQUEST,
+});
+
+export const addCommentFailure = error => ({
+  type: ADD_COMMENT_FAILURE,
+  error,
+});
+
+export const addCommentSuccess = (id, body, created, userId, cardId) => ({
+  type: ADD_COMMENT_SUCCESS,
+  id,
+  body,
+  created,
+  userId,
+  cardId,
+});
+
+export const deleteCommentRequest = () => ({
+  type: DELETE_COMMENT_REQUEST,
+});
+
+export const deleteCommentFailure = error => ({
+  type: DELETE_COMMENT_FAILURE,
+  error,
+});
+
+export const deleteCommentSuccess = id => ({
+  type: DELETE_COMMENT_SUCCESS,
+  id,
+});
 
 export const signUp = (email, name, password, navigationMyDesc) => dispatch => {
   dispatch(signUpRequest());
@@ -128,17 +312,24 @@ export const signIn = (email, password, navigationMyDesc) => dispatch => {
     });
 };
 
-export const getLists = token => dispatch => {
+export const getLists = () => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(getListsRequest());
   axios
     .get(`http://trello-purrweb.herokuapp.com/columns`, {
       headers: { Authorization: token },
     })
+    .catch(error => {
+      dispatch(getListsFailure(error));
+    })
     .then(response => {
-      dispatch(setColumns(response.data));
+      dispatch(getListsSuccess(response.data));
     });
 };
 
-export const addList = (id, title, token) => dispatch => {
+export const addList = (id, title) => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(addListRequest());
   axios
     .post(
       `http://trello-purrweb.herokuapp.com/columns`,
@@ -150,22 +341,31 @@ export const addList = (id, title, token) => dispatch => {
         headers: { Authorization: token },
       },
     )
-    .then(() => {
-      dispatch(getLists(token));
+    .catch(error => {
+      dispatch(addListFailure(error));
+    })
+    .then(response => {
+      dispatch(addListSuccess(+response.data.id, response.data.title, +response.data.user));
     });
 };
 
-export const removeList = (id, token) => dispatch => {
+export const removeList = id => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(removeListRequest());
   axios
     .delete(`http://trello-purrweb.herokuapp.com/columns/${id}`, {
       headers: { Authorization: token },
     })
+    .catch(error => {
+      dispatch(removeListFailure(error));
+    })
     .then(() => {
-      dispatch(getLists(token));
+      dispatch(removeListSuccess(id));
     });
 };
 
-export const updateList = (id, title, token) => dispatch => {
+export const updateList = (id, title) => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
   dispatch(updateListRequest());
   axios
     .put(
@@ -180,22 +380,29 @@ export const updateList = (id, title, token) => dispatch => {
     .catch(error => {
       dispatch(updateListFailure(error));
     })
-    .then(() => {
-      dispatch(updateListSuccess(id, title));
+    .then(response => {
+      dispatch(updateListSuccess(+response.data.id, response.data.title));
     });
 };
 
-export const getCards = token => dispatch => {
+export const getCards = () => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(getCardsRequest());
   axios
     .get(`http://trello-purrweb.herokuapp.com/cards`, {
       headers: { Authorization: token },
     })
+    .catch(error => {
+      dispatch(getCardsFailure(error));
+    })
     .then(response => {
-      dispatch(setCards(response.data));
+      dispatch(getCardsSuccess(response.data));
     });
 };
 
-export const addCard = (title, description, checked, column, token) => dispatch => {
+export const addCard = (title, description, checked, column) => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(addCardRequest());
   axios
     .post(
       `http://trello-purrweb.herokuapp.com/cards`,
@@ -209,23 +416,41 @@ export const addCard = (title, description, checked, column, token) => dispatch 
         headers: { Authorization: token },
       },
     )
-    .then(() => {
-      dispatch(getCards(token));
+    .catch(error => {
+      dispatch(addCardFailure(error));
+    })
+    .then(response => {
+      dispatch(
+        addCardSuccess(
+          response.data.title,
+          response.data.description,
+          !!response.data.checked,
+          response.data.column,
+          +response.data.id,
+        ),
+      );
     });
 };
 
-export const removeCard = (id, token) => dispatch => {
+export const removeCard = id => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(removeCardRequest());
   axios
     .delete(`http://trello-purrweb.herokuapp.com/cards/${id}`, {
       headers: { Authorization: token },
     })
+    .catch(error => {
+      removeCardFailure(error);
+    })
     .then(() => {
+      dispatch(removeCardSuccess(id));
       dispatch(removeCardComments(id));
-      dispatch(getCards(token));
     });
 };
 
-export const updateCard = (id, title, token) => dispatch => {
+export const updateCard = (id, title) => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(updateCardRequest());
   axios
     .put(
       `http://trello-purrweb.herokuapp.com/cards/${id}`,
@@ -236,12 +461,17 @@ export const updateCard = (id, title, token) => dispatch => {
         headers: { Authorization: token },
       },
     )
-    .then(() => {
-      dispatch(getCards(token));
+    .catch(error => {
+      dispatch(updateCardFailure(error));
+    })
+    .then(response => {
+      dispatch(updateCardSuccess(response.data.id, response.data.title));
     });
 };
 
-export const updateCardDescription = (id, description, token) => dispatch => {
+export const updateCardDescription = (id, description) => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(updateCardDescriptionRequest());
   axios
     .put(
       `http://trello-purrweb.herokuapp.com/cards/${id}`,
@@ -252,22 +482,32 @@ export const updateCardDescription = (id, description, token) => dispatch => {
         headers: { Authorization: token },
       },
     )
-    .then(() => {
-      dispatch(getCards(token));
+    .catch(error => {
+      updateCardDescriptionFailure(error);
+    })
+    .then(response => {
+      dispatch(updateCardDescriptionSuccess(response.data.id, response.data.description));
     });
 };
 
-export const getComments = token => dispatch => {
+export const getComments = () => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(getCommentsRequest());
   axios
     .get(`http://trello-purrweb.herokuapp.com/comments`, {
       headers: { Authorization: token },
     })
+    .catch(error => {
+      getCommentsFailure(error);
+    })
     .then(response => {
-      dispatch(setComments(response.data));
+      dispatch(getCommentsSuccess(response.data));
     });
 };
 
-export const addComment = (cardId, body, token) => dispatch => {
+export const addComment = (cardId, body) => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(addCommentRequest());
   axios
     .post(
       `http://trello-purrweb.herokuapp.com/cards/${cardId}/comments`,
@@ -278,22 +518,55 @@ export const addComment = (cardId, body, token) => dispatch => {
         headers: { Authorization: token },
       },
     )
-    .then(() => {
-      dispatch(getComments(token));
+    .catch(error => {
+      addCommentFailure(error);
+    })
+    .then(response => {
+      dispatch(
+        addCommentSuccess(
+          response.data.id,
+          response.data.body,
+          response.data.created,
+          response.data.user.id,
+          response.data.card.id,
+        ),
+      );
     });
 };
 
-export const deleteComment = (commentId, token) => dispatch => {
+export const deleteComment = commentId => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(deleteCommentRequest());
   axios
     .delete(`http://trello-purrweb.herokuapp.com/comments/${commentId}`, {
       headers: { Authorization: token },
     })
+    .catch(error => {
+      addCommentFailure(error);
+    })
     .then(() => {
-      dispatch(getComments(token));
+      dispatch(deleteCommentSuccess(commentId));
     });
 };
 
-export const updateComment = (CommentId, body, token) => dispatch => {
+export const updateCommentRequest = () => ({
+  type: UPDATE_COMMENT_REQUEST,
+});
+
+export const updateCommentFailure = error => ({
+  type: UPDATE_COMMENT_FAILURE,
+  error,
+});
+
+export const updateCommentSuccess = (id, body) => ({
+  type: UPDATE_COMMENT_SUCCESS,
+  id,
+  body,
+});
+
+export const updateComment = (CommentId, body) => (dispatch, getState) => {
+  const { token } = getState().authorReducer;
+  dispatch(updateCommentRequest());
   axios
     .put(
       `http://trello-purrweb.herokuapp.com/comments/${CommentId}`,
@@ -304,7 +577,10 @@ export const updateComment = (CommentId, body, token) => dispatch => {
         headers: { Authorization: token },
       },
     )
-    .then(() => {
-      dispatch(getComments(token));
+    .catch(error => {
+      updateCommentFailure(error);
+    })
+    .then(response => {
+      dispatch(updateCommentSuccess(response.data.id, response.data.body));
     });
 };

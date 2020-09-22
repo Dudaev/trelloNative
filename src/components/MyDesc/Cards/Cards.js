@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
 
 const Cards = props => {
   useEffect(() => {
-    props.getCardsThunk(props.state.authorReducer.token);
     props.getCommentsThunk(props.state.authorReducer.token);
+    props.getCardsThunk(props.state.authorReducer.token);
   }, []);
   const { listTitle } = props.route.params;
   const { listId } = props.route.params;
@@ -79,4 +79,9 @@ Cards.propTypes = {
 const mapStateToProps = state => ({
   state,
 });
-export default connect(mapStateToProps, { removeCardThunk: removeCard, PutCardThunk: updateCard, getCardsThunk: getCards, getCommentsThunk: getComments })(Cards);
+export default connect(mapStateToProps, {
+  removeCardThunk: removeCard,
+  PutCardThunk: updateCard,
+  getCardsThunk: getCards,
+  getCommentsThunk: getComments,
+})(Cards);
